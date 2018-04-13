@@ -1,5 +1,6 @@
 package com.example.pojo;
 
+// useless
 public class Login {
     private String username;
     private String password;
