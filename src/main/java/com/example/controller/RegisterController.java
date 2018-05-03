@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/home/login")
 public class RegisterController {
-    @RequestMapping(value="/test", method = RequestMethod.GET)
+    @RequestMapping(value="/test", method = RequestMethod.POST)
     public String test(@RequestParam String username, @RequestParam String password, Model model){
         if (username.equals("admin") && password.equals("1234")) {
             model.addAttribute("username", username);
-            return "/html/succeed";
+            return "html/succeed";
         } else {
             model.addAttribute("username", username);
-            return "/html/fail";
+            return "html/fail";
         }
 
     }

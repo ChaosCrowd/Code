@@ -12,6 +12,9 @@
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
 
+    <!-- 引入JDBC配置文件 -->
+    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
     <context:component-scan base-package="com.example.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -40,7 +43,7 @@
 
     <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
-        <property name="prefix" value=""/>    <!--设置HTML文件的目录位置-->
+        <property name="prefix" value="/"/>    <!--设置HTML文件的目录位置-->
         <property name="suffix" value=".html"/>
         <property name="contentType" value="text/html"></property>
     </bean>

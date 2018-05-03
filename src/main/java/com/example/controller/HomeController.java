@@ -11,12 +11,12 @@ public class HomeController {
     @RequestMapping("")
     public String home() {
         //System.out.println("home page");
-        return "/html/home";
+        return "html/home";
     }
 
     @RequestMapping("/login")
     public String toLog() {
-        return "/html/login";
+        return "html/login";
     }
 
 }
