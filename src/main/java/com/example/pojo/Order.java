@@ -37,6 +37,12 @@ public class Order {
     private int tablesNumber;
 
     /**
+     * 默认构造函数
+     * mybatis创建实体使用
+     */
+    public Order(){}
+
+    /**
      * 订单构造函数
      * @param addDate
      * @param goodsId

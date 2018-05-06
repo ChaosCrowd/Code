@@ -28,6 +28,12 @@ public class Tables {
     private int orderId;
 
     /**
+     * 默认构造函数
+     * mybatis创建实体使用
+     */
+    public Tables(){}
+
+    /**
      * 桌位构造函数， 默认无订单
      * @param number
      * @param capacity

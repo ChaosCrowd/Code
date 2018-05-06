@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.IGoodsDao">
 
+    <select id="getAllGoods" resultType="goods">
+        select id, name, `desc`, cate, price, image_src as imgSrc from goods;
+    </select>
+
+    <select id="getAllCategories" resultType="String">
+        select distinct cate from goods;
+    </select>
+
+    <select id="getGoodsById" resultType="goods">
+        select id, name, `desc`, cate, price, image_src as imgSrc from goods
+          where id=#{id};
+    </select>
+
+    <select id="getGoodsListByCategory" resultType="goods">
+        select id, name, `desc`, cate, price, image_src as imgSrc from goods
+          where cate=#{cate};
+    </select>
+
+    <select id="getGoodsListByName" resultType="goods">
+        select id, name, `desc`, cate, price, image_src as imgSrc from goods
+          where name=#{name};
+    </select>
+
+    <insert id="insertGoods" parameterType="goods" useGeneratedKeys="true" keyProperty="id">
+        insert into goods(name, desc, cate, price, image_src)
+        values(#{name}, #{desc}, #{cate}, #{price}, #{image_src});
+    </insert>
+
+    <delete id="deleteGoodsById" parameterType="int">
+        delete from goods where id = #{id};
+    </delete>
+
+    <update id="updateGoods">
+        update goods set name = #{name}, desc = #{desc}, cate = #{cate}, price = #{price}, image_src = #{image_src}
+          where id = #{id};
+    </update>
 </mapper>

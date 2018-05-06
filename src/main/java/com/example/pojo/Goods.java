@@ -24,6 +24,13 @@ public class Goods {
     private static String defaultImageSrc = "";
 
     /**
+     * 默认构造函数
+     * mybatis创建实体使用
+     */
+    public Goods() {
+    }
+
+    /**
      *  带图片地址的构造函数
      * @param name
      * @param desc

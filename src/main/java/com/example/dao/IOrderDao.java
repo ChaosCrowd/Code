@@ -5,6 +5,7 @@ import org.springframework.dao.DataAccessException;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单DAO接口
@@ -19,11 +20,10 @@ public interface IOrderDao {
 
     /**
      * 获取某时间段内所有订单
-     * @param begin 开始时间
-     * @param end 结束时间
+     * @Param map 使用键值对保存开始时间与结束时间，键名为begin与end
      * @return 订单列表
      */
-    public List<Order> getOrdersListByPeriod(Date begin, Date end);
+    public List<Order> getOrdersListByPeriod(Map<String, Date> map);
 
     /**
      * 获取某一状态下的所有订单

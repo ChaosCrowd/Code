@@ -4,6 +4,12 @@ public class Manager {
     private String username;
     private String password;
 
+    /**
+     * 默认构造函数
+     * mybatis创建实体使用
+     */
+    public Manager() {}
+
     public Manager(String username, String password) {
         this.username = username;
         this.password = password;
