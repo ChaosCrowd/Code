@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
+<!--mybatis配置整合至spring-mybatis.xml， 此文件已弃用 -->
+
 <configuration>
     <!-- 命名空间 -->
     <typeAliases>
