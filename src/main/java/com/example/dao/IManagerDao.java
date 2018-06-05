@@ -2,11 +2,13 @@ package com.example.dao;
 
 import com.example.pojo.Manager;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
 /**
  * Manager操作接口
  * 通过mybatis的ManagerMapper.xml来实现各方法，无需创建实现类
  */
+@Component
 public interface IManagerDao {
     /**
      * 通过用户名获取Manager对象

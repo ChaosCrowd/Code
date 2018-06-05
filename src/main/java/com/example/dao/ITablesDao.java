@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.pojo.Tables;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * 桌位DAO接口
  * 无需实现类，通过mybatis的TablesMapper.xml实现
  */
+@Component
 public interface ITablesDao {
     /**
      * 获取所有桌位

@@ -2,13 +2,16 @@ package com.example.dao;
 
 import com.example.pojo.Goods;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 
 /**
  * 商品DAO接口
  * 无需实现类，通过mybatis的GoodsMapper.xml实现
  */
+@Component
 public interface IGoodsDao {
 
     /**
@@ -17,12 +20,9 @@ public interface IGoodsDao {
      */
     public List<Goods> getAllGoods();
 
-    /**
-     * 获取所有商品种类
-     * 商品种类描述方式如果有变化，则此处也需要修改
-     * @return 商品种类列表
-     */
-    public List<String> getAllCategories();
+    // 废弃方法（category已定义成新类型）
+    // public List<String> getAllCategories();
+
 
     /**
      * 通过id获取Goods

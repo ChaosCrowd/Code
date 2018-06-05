@@ -1,6 +1,8 @@
 package com.example.service.implement;
 
+import com.example.dao.ICategoryDao;
 import com.example.dao.IGoodsDao;
+import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +22,15 @@ public class MenuServiceImpl implements IMenuService {
     @Autowired
     private IGoodsDao goodsDao;
 
+
+
     @Override
     public List<Goods> getGoodsList() {
         return null;
     }
 
     @Override
-    public List<String> getCategoriesList() {
-        return null;
-    }
-
-    @Override
-    public List<Goods> getGoodsListByCategory(String category) {
+    public List<Goods> getGoodsListByCategory(Category category) {
         return null;
     }
 

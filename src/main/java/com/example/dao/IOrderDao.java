@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.pojo.Order;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
  * 订单DAO接口
  * 无需实现类，通过mybatis的OrderMapper.xml实现
  */
+@Component
 public interface IOrderDao {
     /**
      * 获取所有订单

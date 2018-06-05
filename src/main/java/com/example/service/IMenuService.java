@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,17 +17,11 @@ public interface IMenuService {
     public List<Goods> getGoodsList();
 
     /**
-     * 获取所有商品类别
-     * @return 类别列表
-     */
-    public List<String> getCategoriesList();
-
-    /**
      * 获取某类别下所有商品
-     * @param category 商品类别
+     * @param category 商品类别名
      * @return 商品列表
      */
-    public List<Goods> getGoodsListByCategory(String category);
+    public List<Goods> getGoodsListByCategory(Category category);
 
     /**
      * 通过商品id获取商品

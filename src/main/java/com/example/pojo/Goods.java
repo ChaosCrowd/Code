@@ -1,5 +1,7 @@
 package com.example.pojo;
 
+import java.util.ArrayList;
+
 /**
  * 商品实体类
  */
@@ -14,12 +16,15 @@ public class Goods {
     private String name;
     // 描述信息
     private String desc;
-    // 商品分类(后续迭代是否拆分成新类？)
-    private String cate;
+    // 商品分类(Category类的name字段组成的List)
+    private ArrayList<String> cate;
     // 商品价格
     private float price;
     // 图片URl地址
     private String imgSrc;
+    // 商品剩余数量
+    private int volume;
+
     // 默认图片地址
     private static String defaultImageSrc = "";
 
@@ -37,13 +42,15 @@ public class Goods {
      * @param cate
      * @param price
      * @param imgSrc
+     * @param volume
      */
-    public Goods(String name, String desc, String cate, float price, String imgSrc) {
+    public Goods(String name, String desc, ArrayList<String> cate, float price, String imgSrc, int volume) {
         this.name = name;
         this.desc = desc;
         this.cate = cate;
         this.price = price;
         this.imgSrc = imgSrc;
+        this.volume = volume;
     }
 
     /**
@@ -52,13 +59,15 @@ public class Goods {
      * @param desc
      * @param cate
      * @param price
+     * @param volume
      */
-    public Goods(String name, String desc, String cate, float price) {
+    public Goods(String name, String desc, ArrayList<String> cate, float price, int volume) {
         this.name = name;
         this.desc = desc;
         this.cate = cate;
         this.price = price;
         this.imgSrc = defaultImageSrc;
+        this.volume = volume;
     }
 
     public int getId() {
@@ -85,11 +94,11 @@ public class Goods {
         this.desc = desc;
     }
 
-    public String getCate() {
+    public ArrayList<String> getCate() {
         return cate;
     }
 
-    public void setCate(String cate) {
+    public void setCate(ArrayList<String> cate) {
         this.cate = cate;
     }
 
@@ -109,6 +118,11 @@ public class Goods {
         this.imgSrc = imgSrc;
     }
 
+    public int getVolume() { return volume; }
+
+    public void setVolume(int volume) { this.volume = volume; }
+
+
     public static String getDefaultImageSrc() {
         return defaultImageSrc;
     }
@@ -126,6 +140,7 @@ public class Goods {
                 ", cate='" + cate + '\'' +
                 ", price=" + price +
                 ", imgSrc='" + imgSrc + '\'' +
+                ", volume=‘" + volume + '\'' +
                 '}';
     }
 }
