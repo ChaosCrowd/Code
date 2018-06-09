@@ -47,10 +47,10 @@
         <!--property name="configLocation" value="classpath:conf/mybatis-config.xml"/-->
 
         <!-- 自动扫描mapping.xml文件 -->
-        <property name="mapperLocations" value="classpath:/mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 
         <!-- mybatis对象别名配置,默认设置此包下所有类的别名为类名首字母小写 -->
-        <!-- 即pojo包下的类名设置别名为 goods, manager, order, tables -->
+        <!-- 即pojo包下的类名设置别名为 goods, manager, order, tables , category-->
         <property name="typeAliasesPackage" value="com.example.pojo"/>
     </bean>
 

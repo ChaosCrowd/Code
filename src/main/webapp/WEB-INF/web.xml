@@ -15,7 +15,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/applicationContext*.xml</param-value>
+            <param-value>classpath:spring/applicationContext*.xml,classpath:conf/spring-mybatis.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
@@ -25,6 +25,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--spring的监听类，作用就是加载默认为applicationContext.xml的文件>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener-->
 
     <display-name>Archetype Created Web Application</display-name>
 </web-app>

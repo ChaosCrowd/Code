@@ -10,6 +10,12 @@ public class Category {
     // 类别名
     private String name;
 
+    /**
+     * 默认构造函数
+     * mybatis创建实体使用
+     */
+    public Category () {}
+
     public Category(int id, String name) {
         this.id = id;
         this.name = name;

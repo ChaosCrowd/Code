@@ -3,12 +3,13 @@ package com.example.dao;
 import com.example.pojo.Manager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * Manager操作接口
  * 通过mybatis的ManagerMapper.xml来实现各方法，无需创建实现类
  */
-@Component
+@Repository
 public interface IManagerDao {
     /**
      * 通过用户名获取Manager对象
@@ -34,7 +35,7 @@ public interface IManagerDao {
     public int deleteManagerByName(String name) throws DataAccessException;
 
     /**
-     * 更新manager信息
+     * 更新manager密码
      * @param manager 待更新manager
      * @return 修改的数据库行数
      * @throws DataAccessException

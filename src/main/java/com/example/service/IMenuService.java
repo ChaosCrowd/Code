@@ -39,6 +39,8 @@ public interface IMenuService {
 
     /**
      * 删除商品
+     * （不建议删除商品，因历史订单需要已有商品信息，查询订单时可能出错）
+     * 需要重新设计
      * @param id
      * @return boolean表示操作结果
      */

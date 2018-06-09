@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.pojo.Tables;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * 桌位DAO接口
  * 无需实现类，通过mybatis的TablesMapper.xml实现
  */
-@Component
+@Repository
 public interface ITablesDao {
     /**
      * 获取所有桌位
@@ -35,8 +36,9 @@ public interface ITablesDao {
 
     /**
      * 插入新的桌位
+     * 此处需指定主键 即桌号  不能使用自增主键
      * @param tables
-     * @return 数据库变更行数
+     * @return 影响的行数
      * @throws DataAccessException 操作异常
      */
     public int insertTables(Tables tables) throws DataAccessException;
@@ -47,7 +49,7 @@ public interface ITablesDao {
      * @return 数据库变更行数
      * @throws DataAccessException
      */
-    public int deleteTalesByNumber(int number) throws DataAccessException;
+    public int deleteTablesByNumber(int number) throws DataAccessException;
 
     /**
      * 更新桌位信息

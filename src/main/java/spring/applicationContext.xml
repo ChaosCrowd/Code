@@ -12,13 +12,8 @@
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
 
-    <!-- 引入JDBC配置文件 -->
-    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
-
-    <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="com.example.controller">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <!-- 自动扫描该包，将包中所有注解类注册成bean -->
+    <!--context:component-scan base-package="com.example"/-->
 
     <!--HandlerMapping 无需配置，springMvc可以默认启动-->
 
@@ -29,10 +24,10 @@
     <mvc:resources mapping="/image/**" location="/WEB-INF/statics/image/"/>-->
 
     <!--但是项目部署到linux下发现WEB-INF的静态资源会出现无法解析的情况，但是本地tomcat访问正常，因此建议还是直接把静态资源放在webapp的statics下，映射配置如下-->
-    <mvc:resources mapping="/css/**" location="/statics/css/"/>
-    <mvc:resources mapping="/js/**" location="/statics/js/"/>
+    <!--mvc:resources mapping="/css/**" location="/statics/css/"/-->
+    <!--mvc:resources mapping="/js/**" location="/statics/js/"/-->
     <mvc:resources mapping="/image/**" location="/statics/image/"/>
-    <mvc:resources mapping="/html/**" location="/statics/html/"/>
+    <!--mvc:resources mapping="/html/**" location="/statics/html/"/-->
 
     <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
     <mvc:annotation-driven/>

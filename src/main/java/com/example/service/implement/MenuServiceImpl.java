@@ -6,6 +6,7 @@ import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +23,9 @@ public class MenuServiceImpl implements IMenuService {
     @Autowired
     private IGoodsDao goodsDao;
 
-
-
     @Override
     public List<Goods> getGoodsList() {
-        return null;
+        return goodsDao.getAllGoods();
     }
 
     @Override

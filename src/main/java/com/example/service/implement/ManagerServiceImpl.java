@@ -4,6 +4,7 @@ import com.example.dao.IManagerDao;
 import com.example.pojo.Manager;
 import com.example.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**

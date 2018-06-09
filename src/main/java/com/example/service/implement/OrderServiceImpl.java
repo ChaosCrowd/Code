@@ -4,6 +4,7 @@ import com.example.dao.IOrderDao;
 import com.example.pojo.Order;
 import com.example.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -18,7 +19,7 @@ public class OrderServiceImpl implements IOrderService {
     /**
      * 自动注入的DAO接口
      */
-    @Autowired
+    //@Autowired
     private IOrderDao orderDao;
 
     @Override

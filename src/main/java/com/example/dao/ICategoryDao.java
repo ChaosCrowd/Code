@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.pojo.Category;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * 商品类别DAO接口
  * 通过CategoryMapper实现
  */
-@Component
+@Repository
 public interface ICategoryDao {
     /**
      * 通过id获取类别
@@ -30,13 +31,13 @@ public interface ICategoryDao {
      * 插入新类别
      * 只传入name，id自动生成
      * @param name 类别名
-     * @return 操作影响的行数
+     * @return 插入行的自增主键
      * @throws DataAccessException 插入失败抛出异常
      */
     public int insertCategory(String name) throws DataAccessException;
 
     /**
-     * 通过id删除对应分类
+     * 通过id删除对应category
      * @param id
      * @return 影响的行数
      * @throws DataAccessException 删除失败 抛出异常

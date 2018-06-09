@@ -16,8 +16,8 @@ public class Goods {
     private String name;
     // 描述信息
     private String desc;
-    // 商品分类(Category类的name字段组成的List)
-    private ArrayList<String> cate;
+    // 商品分类(Category组成的List)
+    private ArrayList<Category> cate;
     // 商品价格
     private float price;
     // 图片URl地址
@@ -26,7 +26,7 @@ public class Goods {
     private int volume;
 
     // 默认图片地址
-    private static String defaultImageSrc = "";
+    private static String defaultImageSrc = "defaultImageSrc";
 
     /**
      * 默认构造函数
@@ -44,7 +44,7 @@ public class Goods {
      * @param imgSrc
      * @param volume
      */
-    public Goods(String name, String desc, ArrayList<String> cate, float price, String imgSrc, int volume) {
+    public Goods(String name, String desc, ArrayList<Category> cate, float price, String imgSrc, int volume) {
         this.name = name;
         this.desc = desc;
         this.cate = cate;
@@ -61,7 +61,7 @@ public class Goods {
      * @param price
      * @param volume
      */
-    public Goods(String name, String desc, ArrayList<String> cate, float price, int volume) {
+    public Goods(String name, String desc, ArrayList<Category> cate, float price, int volume) {
         this.name = name;
         this.desc = desc;
         this.cate = cate;
@@ -94,11 +94,11 @@ public class Goods {
         this.desc = desc;
     }
 
-    public ArrayList<String> getCate() {
+    public ArrayList<Category> getCate() {
         return cate;
     }
 
-    public void setCate(ArrayList<String> cate) {
+    public void setCate(ArrayList<Category> cate) {
         this.cate = cate;
     }
 

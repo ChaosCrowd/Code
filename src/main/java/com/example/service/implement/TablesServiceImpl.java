@@ -4,6 +4,7 @@ import com.example.dao.ITablesDao;
 import com.example.pojo.Tables;
 import com.example.service.ITablesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

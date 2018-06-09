@@ -30,7 +30,10 @@ public interface ICategoryService {
     public boolean addCategory(Category category);
 
     /**
-     * 删
+     * 删除category
+     * （注意：删除某类别，需要同时删除关系表中对应行，
+     *  以及修改所有属于此类别中的goods的category属性）
+     *  （需要使用事务）
      * @param id
      * @return 操作结果
      */
