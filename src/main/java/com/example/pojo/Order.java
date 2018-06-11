@@ -31,6 +31,8 @@ public class Order {
 
     // 商品id列表
     private ArrayList<Integer> goodsId;
+    // 商品数量，与商品id下标对应
+    private ArrayList<Integer> goodsCount;
     // 订单总价
     private float price;
     // 订单所在桌号
@@ -52,9 +54,10 @@ public class Order {
      * @param status
      * @param tablesNumber
      */
-    public Order(Date addDate, ArrayList<Integer> goodsId, float price, int status, int tablesNumber) {
+    public Order(Date addDate, ArrayList<Integer> goodsId, ArrayList<Integer> goodsCount, float price, int status, int tablesNumber) {
         this.addDate = addDate;
         this.goodsId = goodsId;
+        this.goodsCount = goodsCount;
         this.price = price;
         this.status = status;
         this.tablesNumber = tablesNumber;
@@ -82,6 +85,14 @@ public class Order {
 
     public void setGoodsId(ArrayList<Integer> goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public ArrayList<Integer> getGoodsCount() {
+        return goodsCount;
+    }
+
+    public void setGoodsCount(ArrayList<Integer> goodsCount) {
+        this.goodsCount = goodsCount;
     }
 
     public float getPrice() {
@@ -115,6 +126,7 @@ public class Order {
                 ", addDate=" + addDate +
                 ", status=" + status +
                 ", goodsId=" + goodsId +
+                ", goodsCount=" + goodsCount +
                 ", price=" + price +
                 ", tablesNumber=" + tablesNumber +
                 '}';

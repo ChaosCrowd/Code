@@ -17,6 +17,11 @@
         <collection property="goodsId" ofType="Integer">
             <result column="goods_id"></result>
         </collection>
+        <!-- 商品数量列表 -->
+        <collection property="goodsCount" ofType="Integer">
+            <result column="count"/>
+        </collection>
+
     </resultMap>
 
     <select id="getAllOrders" resultMap="orderMap">
