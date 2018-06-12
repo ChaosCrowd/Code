@@ -35,7 +35,7 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public Goods getGoodsById(int id) {
-        return null;
+        return goodsDao.getGoodsById(id);
     }
 
     @Override
