@@ -23,26 +23,38 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public List<Category> getCategoriesList() {
-        return null;
+        return categoryDao.getAllCategories();
     }
 
     @Override
     public Category getCategoryById(int id) {
-        return null;
+        return categoryDao.getCategoryByID(id);
     }
 
     @Override
     public boolean addCategory(Category category) {
-        return false;
+        if (categoryDao.insertCategory(category.getName())> 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean deleteCategoryById(int id) {
-        return false;
+        if (categoryDao.deleteCategoryById(id) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean modifyCategory(Category category) {
-        return false;
+        if (categoryDao.updateCategory(category) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

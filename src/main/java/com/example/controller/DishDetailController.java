@@ -18,7 +18,11 @@ public class DishDetailController {
     @ResponseBody
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public JSONObject getDishDetail(@RequestParam(value = "dishid", defaultValue = "-1") int id) {
+
+        JSONObject  dish = new JSONObject();
+        dish.put("msg", "OK");
         JSONObject jsonObject = JSONObject.fromObject(menuService.getGoodsById(id));
-        return jsonObject;
+        dish.put("data", jsonObject);
+        return dish;
     }
 }
