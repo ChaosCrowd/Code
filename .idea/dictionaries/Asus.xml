@@ -2,6 +2,8 @@
   <dictionary name="Asus">
     <words>
       <w>dishid</w>
+      <w>tempid</w>
+      <w>tempname</w>
     </words>
   </dictionary>
 </component>

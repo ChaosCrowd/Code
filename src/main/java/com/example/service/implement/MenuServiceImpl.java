@@ -30,7 +30,7 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public List<Goods> getGoodsListByCategory(Category category) {
-        return null;
+        return goodsDao.getGoodsListByCategory(category);
     }
 
     @Override
@@ -40,16 +40,28 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public boolean addGoods(Goods goods) {
-        return false;
+        if(goodsDao.insertGoods(goods) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean deleteGoodsById(int id) {
-        return false;
+        if (goodsDao.deleteGoodsById(id) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean modifyGoods(Goods goods) {
-        return false;
+        if (goodsDao.updateGoods(goods) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
