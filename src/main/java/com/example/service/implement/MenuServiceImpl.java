@@ -30,26 +30,53 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public List<Goods> getGoodsListByCategory(Category category) {
-        return null;
+        return goodsDao.getGoodsListByCategory(category);
     }
 
     @Override
     public Goods getGoodsById(int id) {
-        return null;
+        return goodsDao.getGoodsById(id);
     }
 
     @Override
     public boolean addGoods(Goods goods) {
-        return false;
+        try {
+            if (goodsDao.insertGoods(goods) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean deleteGoodsById(int id) {
-        return false;
+        try {
+            if (goodsDao.deleteGoodsById(id) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean modifyGoods(Goods goods) {
-        return false;
+        try {
+            if (goodsDao.updateGoods(goods) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.example.service;
 
 import com.example.pojo.Category;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ public interface ICategoryService {
      * 获取所有商品类别
      * @return 类别列表
      */
-    public List<Category> getCategoriesList();
+    public ArrayList<Category> getCategoriesList();
 
     /**
      * 查
