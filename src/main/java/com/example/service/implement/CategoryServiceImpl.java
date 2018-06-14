@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private ICategoryDao categoryDao;
 
     @Override
-    public List<Category> getCategoriesList() {
+    public ArrayList<Category> getCategoriesList() {
         return categoryDao.getAllCategories();
     }
 
@@ -33,27 +34,42 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public boolean addCategory(Category category) {
-        if (categoryDao.insertCategory(category.getName())> 0) {
-            return true;
-        } else {
+        try {
+            if (categoryDao.insertCategory(category.getName()) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
 
     @Override
     public boolean deleteCategoryById(int id) {
-        if (categoryDao.deleteCategoryById(id) > 0) {
-            return true;
-        } else {
+        try {
+            if (categoryDao.deleteCategoryById(id) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
 
     @Override
     public boolean modifyCategory(Category category) {
-        if (categoryDao.updateCategory(category) > 0) {
-            return true;
-        } else {
+        try {
+            if (categoryDao.updateCategory(category) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }

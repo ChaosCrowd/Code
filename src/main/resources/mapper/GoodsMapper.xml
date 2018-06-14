@@ -29,6 +29,7 @@
         from
             goods,
             goods_category,
+
             category
         where
             goods.id = goods_category.goods_id
