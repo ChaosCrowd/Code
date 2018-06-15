@@ -42,6 +42,9 @@ public class MenuServiceImpl implements IMenuService {
     public boolean addGoods(Goods goods) {
         try {
             if (goodsDao.insertGoods(goods) > 0) {
+                for (Category c : goods.getCate()) {
+                    goodsDao.insertSpecificRelation(goods.getId(), c.getId());
+                }
                 return true;
             } else {
                 return false;
@@ -54,8 +57,12 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public boolean deleteGoodsById(int id) {
+        Goods goods = goodsDao.getGoodsById(id);
         try {
             if (goodsDao.deleteGoodsById(id) > 0) {
+                for (Category c : goods.getCate()) {
+                    goodsDao.deleteSpecficRelation(goods.getId(), c.getId());
+                }
                 return true;
             } else {
                 return false;

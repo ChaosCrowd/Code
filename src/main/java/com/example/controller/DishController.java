@@ -159,8 +159,12 @@ public class DishController {
             ArrayList<Category> cate = new ArrayList<>();
             cate.add(c);
 
-            /* modifyGoods的接口设计可能有些问题 */
-            Goods goods = new Goods(name, des, cate, price, img, 0);
+            Goods goods = menuService.getGoodsById(dishId);
+            goods.setCate(cate);
+            goods.setDesc(des);
+            goods.setImgSrc(img);
+            goods.setName(name);
+            goods.setPrice(price);
             boolean flag =  menuService.modifyGoods(goods);
 
             if (!flag) {
@@ -199,7 +203,7 @@ public class DishController {
         }
 
         /* 解析json字符串，并查找菜式 */
-        /* !! 未处理目标菜式不存在的情况 */
+        /* !! 尚未处理目标菜式不存在的情况 */
         String ret = "";
         try {
             JSONObject jo = new JSONObject(reqBody);
