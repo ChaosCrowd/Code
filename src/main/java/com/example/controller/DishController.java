@@ -4,6 +4,7 @@ import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,15 +54,17 @@ public class DishController {
         String ret = "";
         try {
             JSONObject jo = new JSONObject(reqBody);
-            String name = jo.getString("name");
-            float price = (float)jo.getDouble("price");
-            String img = jo.getString("img");
-            String des = jo.getString("description");
-            int categoryId = jo.getInt("categoryId");
-
-            Category c = categoryService.getCategoryById(categoryId);
+            String name = jo.getString("dishName");
+            float price = (float)jo.getDouble("dishPrice");
+            String img = jo.getString("dishImg");
+            String des = jo.getString("dishDescription");
+            JSONArray cateArr = jo.getJSONArray("categoryId");
             ArrayList<Category> cate = new ArrayList<>();
-            cate.add(c);
+            for (int i = 0; i < cateArr.length(); i++) {
+                int categoryId = cateArr.getInt(i);
+                Category c = categoryService.getCategoryById(categoryId);
+                cate.add(c);
+            }
 
             Goods goods = new Goods(name, des, cate, price, img, 0);
             boolean flag =  menuService.addGoods(goods);
@@ -70,8 +73,17 @@ public class DishController {
                 resp.setStatus(403);
                 ret = "{\"msg\": \"Forbidden\",\"data\": null}";
             } else {
-                ret = "{\"msg\": \" OK\",\"data\": {\"id\": \"";
-                ret += Integer.toString(goods.getId()) + "\"}}";
+                ret += "{\"msg\": \" OK\",\"data\": {\"categoryID\": [";
+                for (Category c : cate) {
+                    ret += Integer.toString(c.getId()) + ",";
+                }
+                ret = ret.substring(0, ret.length()-1);
+                ret += "],\"dishInfo\": {\"dishID\": \"" + Integer.toString(goods.getId());
+                ret += "\",\"dishName\": \"" + name;
+                ret += "\",\"dishPrice\": \"" + Float.toString(price);
+                ret += "\",\"dishImg\": \"" + img;
+                ret += "\",\"dishDescription\": \"" + des;
+                ret += "\"}}}";
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -106,15 +118,25 @@ public class DishController {
         String ret = "";
         try {
             JSONObject jo = new JSONObject(reqBody);
-            int id = jo.getInt("id");
-            String name = jo.getString("name");
+            int id = jo.getInt("dishID");
 
+            Goods goods = menuService.getGoodsById(id);
             boolean flag = menuService.deleteGoodsById(id);
             if (!flag) {
                 resp.setStatus(403);
                 ret = "{\"msg\": \"Forbidden\",\"data\": null}";
             } else {
-                ret = "{\"msg\": \" OK\",\"data\": {\"name\": \"" + name + "\"}}";
+                ret += "{\"msg\": \" OK\",\"data\": {\"categoryID\": [";
+                for (Category c : goods.getCate()) {
+                    ret += Integer.toString(c.getId()) + ",";
+                }
+                ret = ret.substring(0, ret.length()-1);
+                ret += "],\"dishInfo\": {\"dishID\": \"" + Integer.toString(id);
+                ret += "\",\"dishName\": \"" + goods.getName();
+                ret += "\",\"dishPrice\": \"" + Float.toString(goods.getPrice());
+                ret += "\",\"dishImg\": \"" + goods.getImgSrc();
+                ret += "\",\"dishDescription\": \"" + goods.getDesc();
+                ret += "\"}}}";
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -149,30 +171,46 @@ public class DishController {
         try {
             JSONObject jo = new JSONObject(reqBody);
             int dishId = jo.getInt("dishID");
-            String name = jo.getString("name");
-            float price = (float)jo.getDouble("price");
-            String img = jo.getString("img");
-            String des = jo.getString("description");
-            int categoryId = jo.getInt("categoryId");
-
-            Category c = categoryService.getCategoryById(categoryId);
+            String name = jo.getString("dishName");
+            float price = (float)jo.getDouble("dishPrice");
+            String img = menuService.getGoodsById(dishId).getImgSrc();
+            String des = jo.getString("dishDescription");
+            JSONArray cateArr = jo.getJSONArray("categoryId");
             ArrayList<Category> cate = new ArrayList<>();
-            cate.add(c);
+            for (int i = 0; i < cateArr.length(); i++) {
+                int categoryId = cateArr.getInt(i);
+                Category c = categoryService.getCategoryById(categoryId);
+                cate.add(c);
+            }
 
-            Goods goods = menuService.getGoodsById(dishId);
-            goods.setCate(cate);
-            goods.setDesc(des);
-            goods.setImgSrc(img);
-            goods.setName(name);
-            goods.setPrice(price);
-            boolean flag =  menuService.modifyGoods(goods);
+            boolean flag;
+            if (cateArr.length() == 0) {
+                flag = menuService.deleteGoodsById(dishId);
+            } else {
+                Goods goods = menuService.getGoodsById(dishId);
+                goods.setCate(cate);
+                goods.setDesc(des);
+                goods.setName(name);
+                goods.setPrice(price);
+
+                flag =  menuService.modifyGoods(goods);
+            }
 
             if (!flag) {
                 resp.setStatus(403);
                 ret = "{\"msg\": \"Forbidden\",\"data\": null}";
             } else {
-                ret = "{\"msg\": \" OK\",\"data\": {\"dishID\": \"";
-                ret += Integer.toString(dishId) + "\"}}";
+                ret += "{\"msg\": \" OK\",\"data\": {\"categoryID\": [";
+                for (Category c : cate) {
+                    ret += Integer.toString(c.getId()) + ",";
+                }
+                ret = ret.substring(0, ret.length()-1);
+                ret += "],\"dishInfo\": {\"dishID\": \"" + Integer.toString(dishId);
+                ret += "\",\"dishName\": \"" + name;
+                ret += "\",\"dishPrice\": \"" + Float.toString(price);
+                ret += "\",\"dishImg\": \"" + img;
+                ret += "\",\"dishDescription\": \"" + des;
+                ret += "\"}}}";
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -207,7 +245,8 @@ public class DishController {
         String ret = "";
         try {
             JSONObject jo = new JSONObject(reqBody);
-            if (jo.getString("dishID") == "null") {
+            if (jo.getString("dishID") == "null" && jo.getString("categoryID") == "null") {
+                /* 第三种情况，dishID和categoryID都为空时，返回所有菜式 */
                 List<Goods> target = menuService.getGoodsList();
                 ret += "{\"msg\": \"OK\",\"data\": [\"categoryID\": \"" + "null" + "\",";
                 ret += "\"dishes\": [";
@@ -218,11 +257,29 @@ public class DishController {
                 }
                 ret = ret.substring(0, ret.length()-1);
                 ret += "]]}";
+            } else if (jo.getString("categoryID") != "null"){
+                /* 第一种情况，categoryID不为空时，返回该类别下所有菜式 */
+                int categoryID = jo.getInt("categoryID");
+                Category c = categoryService.getCategoryById(categoryID);
+                List<Goods> target = menuService.getGoodsListByCategory(c);
+                ret += "{\"msg\": \"OK\",\"data\": [\"categoryID\": \"" + jo.getString("categoryID") + "\",";
+                ret += "\"dishInfo\": [";
+                for (Goods g : target) {
+                    ret += "{\"dishId\": \"" + Integer.toString(g.getId()) + "\",\"dishName\": \"" + g.getName()
+                            + "\",\"dishPrice\": \"" + Float.toString(g.getPrice()) + "\",\"dishImg\": \"" + g.getImgSrc()
+                            + "\",\"dishDescription\": \"" + g.getDesc() + "\"},";
+                }
+                ret = ret.substring(0, ret.length()-1);
+                ret += "]]}";
             } else {
+                /* 第二种情况，categoryID为空且dishID不为空时，根据dishID返回菜式 */
                 int dishId = jo.getInt("dishID");
-                int categoryId = jo.getInt("categoryId");
                 Goods target =  menuService.getGoodsById(dishId);
-                ret += "{\"msg\": \"OK\",\"data\": [\"categoryID\": \"" + Integer.toString(categoryId) + "\",";
+                int categoryID = 0;
+                for (Category c : target.getCate()) {
+                    categoryID = c.getId();
+                }
+                ret += "{\"msg\": \"OK\",\"data\": [\"categoryID\": \"" + Integer.toString(categoryID) + "\",";
                 ret += "\"dishes\": [";
                 ret += "{\"id\": \"" + Integer.toString(target.getId()) + "\",\"name\": \"" + target.getName()
                         + "\",\"price\": \"" + Float.toString(target.getPrice()) + "\",\"img\": \"" + target.getImgSrc()
