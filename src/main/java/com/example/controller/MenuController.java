@@ -21,6 +21,8 @@ import java.util.List;
 public class MenuController {
     @Autowired
     private IMenuService menuService;
+
+    @Autowired
     private ICategoryService categoryService;
 
     @ResponseBody
@@ -28,7 +30,7 @@ public class MenuController {
     public JSONObject getMenu() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg", "OK");
-        List<JSONObject> data = new ArrayList<JSONObject>();
+        List<JSONObject> data = new ArrayList<>();
 
         List<Category> cateList = categoryService.getCategoriesList();
 

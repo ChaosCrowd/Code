@@ -15,6 +15,7 @@ public class DishDetailController {
 
     @Autowired
     private IMenuService menuService;
+
     @ResponseBody
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public JSONObject getDishDetail(@RequestParam(value = "dishid", defaultValue = "-1") int id) {
