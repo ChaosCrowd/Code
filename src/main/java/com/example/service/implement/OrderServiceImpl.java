@@ -24,36 +24,63 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public List<Order> getOrdersList() {
-        return null;
+        return orderDao.getAllOrders();
     }
 
     @Override
     public List<Order> getOrdersListByTimeSlot(Date begin, Date end) {
-        return null;
+        return orderDao.getOrdersListByPeriod(begin, end);
     }
 
     @Override
     public List<Order> getOrdersListByStatus(int status) {
-        return null;
+        return orderDao.getOrdersListByStatus(status);
     }
 
     @Override
     public Order getOrderById(int id) {
-        return null;
+        return orderDao.getOrderById(id);
     }
 
     @Override
     public boolean addOrder(Order order) {
-        return false;
+        try {
+            if (orderDao.insertOrder(order) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean deleteOrderById(int id) {
-        return false;
+        try {
+            if (orderDao.deleteOrderById(id) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @Override
     public boolean modifyOrder(Order order) {
-        return false;
+        try {
+            if (orderDao.updateOrder(order) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 }

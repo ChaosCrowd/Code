@@ -40,27 +40,57 @@ public class MenuServiceImpl implements IMenuService {
 
     @Override
     public boolean addGoods(Goods goods) {
-        if(goodsDao.insertGoods(goods) > 0) {
-            return true;
-        } else {
+        try {
+            if (goodsDao.insertGoods(goods) > 0) {
+                for (Category c : goods.getCate()) {
+                    goodsDao.insertSpecificRelation(goods.getId(), c.getId());
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
 
     @Override
     public boolean deleteGoodsById(int id) {
-        if (goodsDao.deleteGoodsById(id) > 0) {
-            return true;
-        } else {
+        Goods goods = goodsDao.getGoodsById(id);
+        try {
+            if (goodsDao.deleteGoodsById(id) > 0) {
+                for (Category c : goods.getCate()) {
+                    goodsDao.deleteSpecficRelation(goods.getId(), c.getId());
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
 
     @Override
     public boolean modifyGoods(Goods goods) {
-        if (goodsDao.updateGoods(goods) > 0) {
-            return true;
-        } else {
+        int id = goods.getId();
+        Goods previousGoods = goodsDao.getGoodsById(id);
+        try {
+            if (goodsDao.updateGoods(goods) > 0) {
+                for (Category c : previousGoods.getCate()) {
+                    goodsDao.deleteSpecficRelation(previousGoods.getId(), c.getId());
+                }
+                for (Category c : goods.getCate()) {
+                    goodsDao.insertSpecificRelation(goods.getId(), c.getId());
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
