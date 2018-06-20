@@ -23,31 +23,43 @@ public class TablesServiceImpl implements ITablesService {
 
     @Override
     public List<Tables> getTablesList() {
-        return null;
+        return tablesDao.getAllTables();
     }
 
     @Override
     public List<Tables> getTablesListByStatus(int status) {
-        return null;
+        return tablesDao.getTablesListByStatus(status);
     }
 
     @Override
     public Tables getTablesByNumber(int number) {
-        return null;
+        return tablesDao.getTablesByNumber(number);
     }
 
     @Override
     public boolean addTables(Tables tables) {
-        return false;
+        if (tablesDao.insertTables(tables)> 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean deleteTableByNumber(int number) {
-        return false;
+        if (tablesDao.deleteTablesByNumber(number) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean modifyTables(Tables tables) {
-        return false;
+        if (tablesDao.updateTables(tables) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

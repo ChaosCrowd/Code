@@ -33,12 +33,13 @@ public class MenuController extends HttpServlet {
     @ResponseBody
     @RequestMapping(path = "", method = RequestMethod.GET)
     public String getMenu(HttpServletRequest request, HttpServletResponse response){
+        //response.setHeader("content-type", "text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
 
         //获取所有菜品
         ArrayList<Category> cateList = categoryService.getCategoriesList();
-
+        //System.out.println(cateList);
         JSONObject jsonObject = new JSONObject();
 
         //json加入msg
@@ -66,6 +67,7 @@ public class MenuController extends HttpServlet {
             data.add(cateoryJSON);
         }
         jsonObject.put("data", data);
+       System.out.println(jsonObject.toString());
         return jsonObject.toString();
     }
 }

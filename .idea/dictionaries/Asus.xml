@@ -1,7 +1,11 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Asus">
     <words>
+      <w>categoryserviceimpl</w>
+      <w>debugfile</w>
+      <w>delegator</w>
       <w>dishid</w>
+      <w>spylogdelegator</w>
       <w>tempid</w>
       <w>tempname</w>
     </words>

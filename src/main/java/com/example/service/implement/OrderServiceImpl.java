@@ -3,6 +3,7 @@ package com.example.service.implement;
 import com.example.dao.IOrderDao;
 import com.example.pojo.Order;
 import com.example.service.IOrderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements IOrderService {
-
+    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
     /**
      * 自动注入的DAO接口
      */
@@ -52,6 +53,7 @@ public class OrderServiceImpl implements IOrderService {
             }
         } catch (Exception e) {
             System.out.println(e);
+            LOGGER.error(e);
             return false;
         }
     }
@@ -65,6 +67,7 @@ public class OrderServiceImpl implements IOrderService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -79,6 +82,7 @@ public class OrderServiceImpl implements IOrderService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }

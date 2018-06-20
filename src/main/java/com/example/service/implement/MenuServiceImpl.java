@@ -5,6 +5,7 @@ import com.example.dao.IGoodsDao;
 import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.IMenuService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Service
 public class MenuServiceImpl implements IMenuService {
-
+    private static final Logger LOGGER = Logger.getLogger(MenuServiceImpl.class);
     /**
      * 自动注入的DAO
      */
@@ -47,6 +48,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -61,6 +63,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -75,6 +78,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
