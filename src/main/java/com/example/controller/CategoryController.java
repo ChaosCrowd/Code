@@ -53,7 +53,7 @@ public class CategoryController extends HttpServlet {
     }
 
 
-    //修改菜品名
+    //修改菜品
     @ResponseBody
     @RequestMapping(method = RequestMethod.PATCH)
     public String renameCate(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
