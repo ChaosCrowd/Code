@@ -33,6 +33,7 @@
             category
         where
             goods.id = goods_category.goods_id
+                and goods.active = 1
             and goods_category.category_id = category.id;
     </select>
 
@@ -48,6 +49,7 @@
             category
         where
             goods.id = #{id}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and goods_category.category_id = category.id;
     </select>
@@ -64,6 +66,7 @@
             category
         where
             goods_category.category_id = #{id}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and category.id = #{id};
     </select>
@@ -80,6 +83,7 @@
             category
         where
             goods.name = #{name}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and goods_category.category_id = category.id;
     </select>
@@ -94,7 +98,8 @@
     </insert>
 
     <delete id="deleteGoodsById" parameterType="int">
-        delete from goods where id = #{id};
+        update goods set active = 0
+        where id = #{id};
     </delete>
 
     <update id="updateGoods" parameterType="goods">

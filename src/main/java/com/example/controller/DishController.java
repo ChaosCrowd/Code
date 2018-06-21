@@ -59,7 +59,7 @@ public class DishController {
             String img = jo.getString("dishImg");
             String des = jo.getString("dishDescription");
             JSONArray cateArr = jo.getJSONArray("categoryId");
-            ArrayList<Category> cate = new ArrayList<>();
+            ArrayList<Category> cate = new ArrayList<Category>();
             for (int i = 0; i < cateArr.length(); i++) {
                 int categoryId = cateArr.getInt(i);
                 Category c = categoryService.getCategoryById(categoryId);
@@ -176,7 +176,7 @@ public class DishController {
             String img = menuService.getGoodsById(dishId).getImgSrc();
             String des = jo.getString("dishDescription");
             JSONArray cateArr = jo.getJSONArray("categoryId");
-            ArrayList<Category> cate = new ArrayList<>();
+            ArrayList<Category> cate = new ArrayList<Category>();
             for (int i = 0; i < cateArr.length(); i++) {
                 int categoryId = cateArr.getInt(i);
                 Category c = categoryService.getCategoryById(categoryId);

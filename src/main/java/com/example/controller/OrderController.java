@@ -20,7 +20,10 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
     private IMenuService menuService;
+
     public void saveOrder(@RequestBody JSONObject data) {
         float totleprice = 0;
         String temp = data.optString("tables_number");
