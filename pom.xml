@@ -12,6 +12,8 @@
   <name>ordering Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
+
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -31,7 +33,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
 
@@ -185,6 +187,7 @@
           <version>2.3</version>
       </dependency>
       <!-- springframe end -->
+
       <!-- json 依赖 -->
       <dependency>
           <groupId>net.sf.json-lib</groupId>
@@ -192,6 +195,14 @@
           <version>2.4</version>
           <classifier>jdk15</classifier>
       </dependency>
+
+      <!-- fastJson -->
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
+          <version>1.2.4</version>
+      </dependency>
+
       <dependency>
           <groupId>commons-beanutils</groupId>
           <artifactId>commons-beanutils</artifactId>
@@ -235,8 +246,18 @@
           </resource>
           <resource>
               <directory>${basedir}/src/main/resources</directory>
+              <includes>
+                  <include>**/**</include>
+              </includes>
+              <filtering>true</filtering>
           </resource>
+          <resource>
+              <directory>${basedir}/src/test/resources</directory>
+          </resource>
+
       </resources>
+
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
 
