@@ -28,7 +28,15 @@
       <log4j.version>1.2.12</log4j.version>
   </properties>
 
-  <dependencies>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
       <!-- Junit -->
     <dependency>
       <groupId>junit</groupId>
@@ -40,21 +48,25 @@
 
       <!-- 日志文件管理包 -->
       <!-- log start -->
-      <dependency>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-          <version>${log4j.version}</version>
-      </dependency>
-      <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-          <version>RELEASE</version>
-      </dependency>
-      <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-          <version>RELEASE</version>
-      </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+
       <!-- log end -->
 
       <!--j2ee相关包 servlet、jsp、jstl-->
@@ -224,7 +236,15 @@
           <version>1.0.3</version>
       </dependency>
 
-      <dependency>
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
           <version>2.5</version>
@@ -277,15 +297,15 @@
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
         </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.7.0</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-                <encoding>utf8</encoding>
-            </configuration>
-        </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>1.6</source>
+                  <target>1.6</target>
+                  <encoding>utf-8</encoding>
+              </configuration>
+          </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.20.1</version>

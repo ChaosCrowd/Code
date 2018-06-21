@@ -3,6 +3,7 @@ package com.example.service.implement;
 import com.example.dao.IManagerDao;
 import com.example.pojo.Manager;
 import com.example.service.IManagerService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ManagerServiceImpl implements IManagerService {
+    private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     /**
      * 自动注入的DAO
      */

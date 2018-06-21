@@ -29,6 +29,13 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener-->
-
+    <!-- 指定监听器加载的log4j配置文件 -->
+    <context-param>
+        <param-name>log4j</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
     <display-name>Archetype Created Web Application</display-name>
 </web-app>

@@ -1,5 +1,6 @@
 package com.example.service.implement;
 
+import org.apache.log4j.Logger;
 import com.example.dao.ICategoryDao;
 import com.example.pojo.Category;
 import com.example.service.ICategoryService;
@@ -10,12 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 类别管理service实现类
  */
 @Service
 public class CategoryServiceImpl implements ICategoryService {
-
+    private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     /**
      * 自动注入的DAO
      */
@@ -34,6 +36,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public boolean addCategory(Category category) {
+
         try {
             if (categoryDao.insertCategory(category.getName()) > 0) {
                 return true;
@@ -41,6 +44,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -55,6 +59,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -69,6 +74,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
+            LOGGER.error(e);
             System.out.println(e);
             return false;
         }

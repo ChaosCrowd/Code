@@ -1,6 +1,7 @@
 package com.example.dao;
 
 import com.example.pojo.Category;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
  */
 @Repository
 public interface ICategoryDao {
+    //private static final Logger LOGGER = Logger.getLogger(ICategoryDao.class);
     /**
      * 通过id获取类别
      * @param id
      * @return
      */
     public Category getCategoryByID(int id);
+
 
     /**
      * 获取所有类别
