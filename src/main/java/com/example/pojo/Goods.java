@@ -11,7 +11,7 @@ public class Goods {
      * 商品id
      * 数据库自增，无需初始化
      */
-    private int id;
+    private static int id = 0;
     // 商品名
     private String name;
     // 描述信息
@@ -51,6 +51,7 @@ public class Goods {
         this.price = price;
         this.imgSrc = imgSrc;
         this.volume = volume;
+        this.id = this.id+1;
     }
 
     /**
