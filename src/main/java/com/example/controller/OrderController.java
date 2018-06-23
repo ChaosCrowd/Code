@@ -38,7 +38,10 @@ public class OrderController {
 
         JSONObject json = JSONObject.fromObject(data);
         float totleprice = 0;
+        //获取桌号
         String temp = json.getString("tables_number");
+
+        //获取时间
         String temptimestamp = json.getString("timestamp");
         Timestamp ts = new Timestamp(Long.parseLong(temptimestamp));
         Date date = ts;
@@ -63,7 +66,7 @@ public class OrderController {
             totleprice += price*count;
         }
 
-        //获取时间
+
         Order temp3 = new Order(sqlDate, goodlistid, countid, totleprice, 2, tablenum);
         System.out.println(temp3.toString());
         System.out.println(orderService.addOrder(temp3));
