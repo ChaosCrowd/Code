@@ -43,6 +43,7 @@ public class MenuServiceImpl implements IMenuService {
     public boolean addGoods(Goods goods) {
         try {
             if (goodsDao.insertGoods(goods) > 0) {
+
                 for (Category c : goods.getCate()) {
                     goodsDao.insertSpecificRelation(goods.getId(), c.getId());
                 }
