@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/order", method = RequestMethod.POST)
+@RequestMapping(value = "/api/*/order", method = RequestMethod.POST)
 public class OrderController {
     @Autowired
     private IOrderService orderService;
