@@ -250,12 +250,13 @@
           <version>2.5</version>
           <scope>provided</scope>
       </dependency>
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>compile</scope>
-      </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
   </dependencies>
 
   <build>
@@ -269,7 +270,6 @@
                   <include>**/*.properties</include>
                   <include>**/*.xml</include>
               </includes>
-              <filtering>true</filtering>
           </resource>
           <resource>
               <directory>${basedir}/src/main/resources</directory>

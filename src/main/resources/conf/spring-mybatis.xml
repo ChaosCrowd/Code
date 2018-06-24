@@ -66,4 +66,17 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
+    <!-- 配置拦截器，用于验证api权限 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- path表示拦截路径 暂时除sign操作外全部拦截  客户端另议 -->
+            <mvc:mapping path="/api/*/category"/>
+            <mvc:mapping path="/api/*/dish"/>
+            <mvc:mapping path="/api/*/dishes"/>
+            <mvc:mapping path="/api/*/menu"/>
+            <mvc:mapping path="/api/*/order"/>
+            <mvc:mapping path="/api/*/tables"/>
+            <bean class="com.example.interceptor.VerifyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

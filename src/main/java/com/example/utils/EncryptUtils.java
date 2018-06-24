@@ -10,7 +10,7 @@ import java.security.MessageDigest;
  * 用于加密明文密码(MD5)
  */
 public class EncryptUtils {
-    private static final String MD5_KEY = "ordering";
+    private static final String ALGO = "MD5";
     private static final Logger logger = Logger.getLogger(EncryptUtils.class);
 
     public static String encrypt(String password) {
@@ -18,7 +18,7 @@ public class EncryptUtils {
 
         BigInteger bigInteger = null;
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance(MD5_KEY);
+            MessageDigest messageDigest = MessageDigest.getInstance(ALGO);
             byte[] pwData = password.getBytes();
             messageDigest.update(pwData);
             bigInteger = new BigInteger(messageDigest.digest());
@@ -30,5 +30,6 @@ public class EncryptUtils {
         String ret = bigInteger.toString();
         logger.debug("encrypt completed, md5: " + ret);
         return ret;
+
     }
 }
