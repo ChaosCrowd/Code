@@ -1,6 +1,7 @@
 package com.example.service.implement;
 
 import com.example.dao.IOrderDao;
+import com.example.pojo.Goods;
 import com.example.pojo.Order;
 import com.example.service.IOrderService;
 import org.apache.log4j.Logger;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +23,7 @@ public class OrderServiceImpl implements IOrderService {
     /**
      * 自动注入的DAO接口
      */
-    //@Autowired
+    @Autowired
     private IOrderDao orderDao;
 
     @Override
@@ -46,12 +49,18 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean addOrder(Order order) {
         try {
-            if (orderDao.insertOrder(order) > 0) {
+            if (orderDao.insertOrder(order) >= 0) {
+                ArrayList<Integer>  goodslist = order.getGoodsId();
+                ArrayList<Integer>  countlist = order.getGoodsCount();
+                for (int i = 0; i < goodslist.size(); i++) {
+                    orderDao.insertSpecificRelation(order.getId(), goodslist.get(i), countlist.get(i));
+                }
                 return true;
             } else {
                 return false;
             }
         } catch (Exception e) {
+            System.out.println("1");
             System.out.println(e);
             LOGGER.error(e);
             return false;
@@ -61,7 +70,14 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean deleteOrderById(int id) {
         try {
-            if (orderDao.deleteOrderById(id) > 0) {
+            Order order = orderDao.getOrderById(id);
+            ArrayList<Integer> goodslist = order.getGoodsId();
+            ArrayList<Integer> countlist = order.getGoodsCount();
+            if (order != null) {
+                orderDao.deleteOrderById(id);
+                for (int i = 0; i < goodslist.size(); i++) {
+                    orderDao.deleteSpecificRelation(order.getId(), goodslist.get(i));
+                }
                 return true;
             } else {
                 return false;

@@ -11,12 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/order", method = RequestMethod.POST)
 public class OrderController {
     @Autowired
     private IOrderService orderService;
@@ -24,13 +29,27 @@ public class OrderController {
     @Autowired
     private IMenuService menuService;
 
-    public void saveOrder(@RequestBody JSONObject data) {
+    @RequestMapping(value = "/api/*/order", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadOrder(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
+        JSONObject res = new JSONObject();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("Content-Type:application/json");
+
+        JSONObject json = JSONObject.fromObject(data);
         float totleprice = 0;
-        String temp = data.optString("tables_number");
+        //获取桌号
+        String temp = json.getString("tables_number");
+
+        //获取时间
+        String temptimestamp = json.getString("timestamp");
+        Timestamp ts = new Timestamp(Long.parseLong(temptimestamp));
+        Date date = ts;
+        java.sql.Date sqlDate=new java.sql.Date(date.getTime());
         int tablenum = Integer.parseInt(temp);
 
         //JSON数组
-        JSONArray order = data.getJSONArray("order");
+        JSONArray order = json.getJSONArray("order");
         ArrayList<Integer> goodlistid = new ArrayList<Integer>();
         ArrayList<Integer> countid = new ArrayList<Integer>();
         for (int i = 0; i < order.size(); i++) {
@@ -46,10 +65,13 @@ public class OrderController {
             float price = temp2.getPrice();
             totleprice += price*count;
         }
-        //获取时间
-        java.sql.Date currentDate = new java.sql.Date(System.currentTimeMillis());
-        Order temp3 = new Order(currentDate, goodlistid, countid, totleprice, 2, tablenum);
-        orderService.addOrder(temp3);
+
+
+        Order temp3 = new Order(sqlDate, goodlistid, countid, totleprice, 2, tablenum);
+        System.out.println(temp3.toString());
+        System.out.println(orderService.addOrder(temp3));
+        res.put("msg", "OK");
+        return res.toString();
 
     }
 
