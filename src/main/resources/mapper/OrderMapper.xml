@@ -27,7 +27,7 @@
     <select id="getAllOrders" resultMap="orderMap">
         select
             `order`.*,
-            order_goods.goods_id
+            order_goods.*
         from
             `order`,
             order_goods
@@ -38,18 +38,18 @@
     <select id="getOrdersListByPeriod" resultMap="orderMap">
         select
             `order`.*,
-            order_goods.goods_id
+            order_goods.*
         from
             `order`, order_goods
         where
-            `order`.add_time between #{0} and #{1}
+            `order`.add_time between #{arg0} and #{arg1}
             and `order`.id = order_goods.order_id;
     </select>
 
     <select id="getOrdersListByStatus" resultMap="orderMap">
         select
             `order`.*,
-            order_goods.goods_id
+            order_goods.*
         from
             `order`, order_goods
         where
@@ -60,7 +60,7 @@
     <select id="getOrderById" resultMap="orderMap">
         select
             `order`.*,
-            order_goods.goods_id
+            order_goods.*
         from
             `order`, order_goods
         where
@@ -98,25 +98,25 @@
         insert into
             order_goods (order_id, goods_id, count)
         values
-            (#{0}, #{1}, #{2});
+            (#{arg0}, #{arg1}, #{arg2});
     </insert>
 
     <delete id="deleteSpecificRelation">
         delete from
             order_goods
         where
-            order_id = #{0}
-            and goods_id = #{1};
+            order_id = #{arg0}
+            and goods_id = #{arg1};
     </delete>
 
     <update id="updateSpecificRelation">
         update
             order_goods
         set
-            count = #{2}
+            count = #{arg2}
         where
-            order_id = #{0}
-            and goods_id = #{1};
+            order_id = #{arg0}
+            and goods_id = #{arg1};
     </update>
 
 </mapper>

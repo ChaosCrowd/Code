@@ -12,7 +12,7 @@ public class Goods {
      * 数据库自增，无需初始化
      */
     private int id;
-    // 商品名
+    // 商品名,可重名
     private String name;
     // 描述信息
     private String desc;

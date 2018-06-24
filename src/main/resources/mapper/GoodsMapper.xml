@@ -103,7 +103,7 @@
     </delete>
 
     <update id="updateGoods" parameterType="goods">
-        update goods set name = #{name}, `desc` = #{desc}, price = #{price}, image_src = #{image_src}
+        update goods set name = #{name}, `desc` = #{desc}, price = #{price}, image_src = #{imgSrc}
           where id = #{id};
     </update>
 

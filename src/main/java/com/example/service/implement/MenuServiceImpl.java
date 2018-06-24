@@ -81,6 +81,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public boolean modifyGoods(Goods goods) {
         int id = goods.getId();
+        System.out.println(id);
         Goods previousGoods = goodsDao.getGoodsById(id);
         try {
             if (goodsDao.updateGoods(goods) > 0) {

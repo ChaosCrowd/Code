@@ -1,11 +1,12 @@
 package com.example.service.implement;
 
-import org.apache.log4j.Logger;
 import com.example.dao.ICategoryDao;
+import com.example.dao.IGoodsDao;
 import com.example.pojo.Category;
+import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private ICategoryDao categoryDao;
 
+    @Autowired
+    private IGoodsDao goodsDao;
+
     @Override
     public ArrayList<Category> getCategoriesList() {
         return categoryDao.getAllCategories();
@@ -38,7 +42,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public boolean addCategory(Category category) {
 
         try {
-            if (categoryDao.insertCategory(category.getName()) > 0) {
+            if (categoryDao.insertCategory(category) > 0) {
                 return true;
             } else {
                 return false;
@@ -53,7 +57,13 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public boolean deleteCategoryById(int id) {
         try {
-            if (categoryDao.deleteCategoryById(id) > 0) {
+            Category cate = categoryDao.getCategoryByID(id);
+            List<Goods> goodlist = goodsDao.getGoodsListByCategory(cate);
+            if (cate != null) {
+                for (int i = 0; i < goodlist.size(); i++) {
+                    goodsDao.deleteSpecficRelation(goodlist.get(i).getId(), id);
+                }
+                categoryDao.deleteCategoryById(id);
                 return true;
             } else {
                 return false;

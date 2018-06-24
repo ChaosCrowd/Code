@@ -36,9 +36,11 @@ public class DishController {
     @ResponseBody
     public String addDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("Content-Type:application/json");
+        response.setHeader("Content-Type","text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         JSONObject res = new JSONObject();
 
+        //System.out.println(data);
         /* 获取请求body信息 */
         JSONObject json = JSONObject.fromObject(data);
         String dishname = json.getString("dishName");
@@ -72,6 +74,8 @@ public class DishController {
             tempjson1.put("dishDescription", dishDesc);
             tempjson.put("dishInfo", tempjson1);
             res.put("data", tempjson);
+
+            //System.out.println(res.toString());
             return res.toString();
         } else {
             response.setStatus(200);
@@ -136,6 +140,7 @@ public class DishController {
 
         /* 获取请求body信息 */
         JSONObject json = JSONObject.fromObject(data);
+        String dishid = json.getString("dishID");
         String dishname = json.getString("dishName");
         String dishprice = json.getString("dishPrice");
         String dishimage = json.getString("dishImg");
@@ -152,15 +157,22 @@ public class DishController {
             tempint.add(Integer.parseInt(tempList.get(i)));
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
-        Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), dishimage, 0);
-        int dishid = good.getId();
+
+        int tempdishid = Integer.parseInt(dishid);
+        Goods good = menuService.getGoodsById(tempdishid);
+        good.setCate(catelist);
+        good.setDesc(dishDesc);
+        good.setImgSrc(dishimage);
+        good.setName(dishname);
+        good.setPrice(Float.parseFloat(dishprice));
+
         if (menuService.modifyGoods(good)) {
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject tempjson = new JSONObject();
             JSONObject tempjson1 = new JSONObject();
             tempjson.put("categoryID", tempint);
-            tempjson1.put("dishID", dishid);
+            tempjson1.put("dishID", tempdishid);
             tempjson1.put("dishName", dishname);
             tempjson1.put("dishPrice", Float.parseFloat(dishprice));
             tempjson1.put("dishImg", dishimage);

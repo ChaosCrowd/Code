@@ -3,17 +3,11 @@ package com.example.controller;
 
 import com.example.pojo.Category;
 import com.example.service.ICategoryService;
-
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/*/category")
+
 
 public class CategoryController extends HttpServlet {
     @Autowired
     private ICategoryService categoryService;
 
     @ResponseBody
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/*/query/category", method = RequestMethod.GET)
     public String getCategory(HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
@@ -55,7 +49,7 @@ public class CategoryController extends HttpServlet {
 
     //修改菜品
     @ResponseBody
-    @RequestMapping(method = RequestMethod.PATCH)
+    @RequestMapping(value = "/api/*/modify/category", method = RequestMethod.POST)
     public String renameCate(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
@@ -84,8 +78,10 @@ public class CategoryController extends HttpServlet {
         }
     }
 
+    //增加菜品类型
+
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/api/*/add/category", method = RequestMethod.POST)
     public String  addCate(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
@@ -95,13 +91,13 @@ public class CategoryController extends HttpServlet {
         JSONObject paramJSON = JSONObject.fromObject(data);
         String tempname = paramJSON.getString("categoryName");
         Category temp = new Category();
-        int newid = temp.getId();
         temp.setName(tempname);
         if (categoryService.addCategory(temp)) {
+            int newid = temp.getId();
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject temp1 = new JSONObject();
-            temp1.put("categoryID", String.valueOf(newid));
+            temp1.put("categoryID", newid);
             temp1.put("categoryName", tempname);
             res.put("data", temp1);
             return res.toString();
@@ -113,23 +109,22 @@ public class CategoryController extends HttpServlet {
         }
     }
 
+    //删除菜品
     @ResponseBody
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteCate(@RequestBody String data,  HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/api/*/delete/category", method = RequestMethod.GET)
+    public String deleteCate(@RequestParam(value = "categoryID", defaultValue = "-1") int id, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
-        JSONObject temp = JSONObject.fromObject(data);
 
         JSONObject res = new JSONObject();
-        String tempid = temp.getString("categoryID");
-        int id = Integer.parseInt(tempid);
 
-        String tempname = temp.getString("categoryName");
+        Category cate = categoryService.getCategoryById(id);
+        String tempname = cate.getName();
         if (categoryService.deleteCategoryById(id)) {
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject temp1 = new JSONObject();
-            temp1.put("categoryID", tempid);
+            temp1.put("categoryID", id);
             temp1.put("categoryName", tempname);
             res.put("data", temp1);
             return res.toString();
