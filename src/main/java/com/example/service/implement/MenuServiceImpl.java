@@ -1,13 +1,11 @@
 package com.example.service.implement;
 
-import com.example.dao.ICategoryDao;
 import com.example.dao.IGoodsDao;
 import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.IMenuService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,7 +62,10 @@ public class MenuServiceImpl implements IMenuService {
         try {
             if (goodsDao.deleteGoodsById(id) > 0) {
                 for (Category c : goods.getCate()) {
-                    goodsDao.deleteSpecficRelation(goods.getId(), c.getId());
+                    //System.out.println(goods.getId()+" "+c.getId());
+                    int temp = goodsDao.deleteSpecficRelation(goods.getId(), c.getId());
+                    //System.out.println(temp);
+
                 }
                 return true;
             } else {

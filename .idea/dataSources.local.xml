@@ -4,9 +4,6 @@
     <data-source name="mydb@localhost" uuid="77c46007-e383-48ee-a343-970a298cc058">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
     </data-source>
-    <data-source name="tencentCloud" uuid="1118fcac-f573-485d-a3ca-e9776cec2d4f">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-    </data-source>
     <data-source name="test@139.199.71.21" uuid="9115ef08-9876-4058-8606-68605107b2d6">
       <database-info product="MySQL" version="5.7.22-0ubuntu0.16.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.46 ( Revision: 9cc87a48e75c2d2e87c1a293b2862ce651cb256e )">
         <extra-name-characters>#@</extra-name-characters>
@@ -16,9 +13,6 @@
       <user-name>root</user-name>
       <introspection-schemas>*:test</introspection-schemas>
     </data-source>
-    <data-source name="mydb" uuid="d643ed11-73a9-47bf-9b48-90dbbf298392">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-    </data-source>
     <data-source name="mydb@139.199.71.21 [2]" uuid="a09fb5c9-0d43-4017-b2c3-ab8873bf624a">
       <database-info product="MySQL" version="5.7.22-0ubuntu0.16.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.46 ( Revision: 9cc87a48e75c2d2e87c1a293b2862ce651cb256e )">
         <extra-name-characters>#@</extra-name-characters>
@@ -27,16 +21,6 @@
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <user-name>ordering</user-name>
       <introspection-schemas>*:mydb</introspection-schemas>
-    </data-source>
-    <data-source name="@localhost" uuid="3057254f-0eaa-44ea-adf0-61790ee0acb4">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <secret-storage>master_key</secret-storage>
-      <first-sync>true</first-sync>
-    </data-source>
-    <data-source name="@localhost [2]" uuid="a1ee1502-2809-487b-bdda-6ea7a6f1ff43">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <secret-storage>master_key</secret-storage>
-      <first-sync>true</first-sync>
     </data-source>
   </component>
 </project>

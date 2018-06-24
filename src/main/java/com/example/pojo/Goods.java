@@ -11,7 +11,7 @@ public class Goods {
      * 商品id
      * 数据库自增，无需初始化
      */
-    private static int id = 0;
+    private int id;
     // 商品名
     private String name;
     // 描述信息

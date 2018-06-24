@@ -3,10 +3,8 @@ package com.example.dao;
 import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 
@@ -53,7 +51,7 @@ public interface IGoodsDao {
     /**
      * 插入商品
      * @param goods
-     * @return 插入行的自增主键
+     * @return 行数的变化，即增加几行，删除几行
      * @throws DataAccessException 插入失败，抛出异常
      */
     public int insertGoods(Goods goods) throws DataAccessException;

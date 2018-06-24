@@ -4,16 +4,12 @@ import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -62,8 +58,8 @@ public class DishController {
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
         Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), dishimage, 0);
-        int dishid = good.getId();
         if (menuService.addGoods(good)) {
+            int dishid = good.getId();
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject tempjson = new JSONObject();
@@ -93,7 +89,8 @@ public class DishController {
         response.setContentType("Content-Type:application/json");
 
         JSONObject res = new JSONObject();
-        System.out.println(dishid);
+        //
+        // System.out.println(dishid);
         Goods good = menuService.getGoodsById(dishid);
         if (good != null) {
             menuService.deleteGoodsById(dishid);

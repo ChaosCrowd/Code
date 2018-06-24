@@ -33,6 +33,7 @@
             category
         where
             goods.id = goods_category.goods_id
+                and goods.active = 1
             and goods_category.category_id = category.id;
     </select>
 
@@ -48,6 +49,7 @@
             category
         where
             goods.id = #{id}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and goods_category.category_id = category.id;
     </select>
@@ -64,6 +66,7 @@
             category
         where
             goods_category.category_id = #{id}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and category.id = #{id};
     </select>
@@ -80,6 +83,7 @@
             category
         where
             goods.name = #{name}
+            and goods.active = 1
             and goods.id = goods_category.goods_id
             and goods_category.category_id = category.id;
     </select>
@@ -90,11 +94,12 @@
 
     <insert id="insertGoods" parameterType="goods" useGeneratedKeys="true" keyProperty="id">
         insert into goods (name, `desc`, price, image_src, volume)
-        values (#{name}, #{desc}, #{price}, #{imageSrc}, #{volume});
+        values (#{name}, #{desc}, #{price}, #{imgSrc}, #{volume});
     </insert>
 
     <delete id="deleteGoodsById" parameterType="int">
-        delete from goods where id = #{id};
+        update goods set active = 0
+        where id = #{id};
     </delete>
 
     <update id="updateGoods" parameterType="goods">
@@ -102,14 +107,14 @@
           where id = #{id};
     </update>
 
-    <delete id="deleteSpecificRelation">
+    <delete id="deleteSpecficRelation" >
         delete from mydb.goods_category
-        where mydb.goods_category.goods_id = #{0}
-              and mydb.goods_category.category_id = #{1};
+        where mydb.goods_category.goods_id = #{arg0}
+              and mydb.goods_category.category_id = #{arg1};
     </delete>
 
     <insert id="insertSpecificRelation">
         insert into goods_category(goods_id,category_id)
-        values (#{0}, #{1});
+        values (#{arg0}, #{arg1});
     </insert>
 </mapper>
