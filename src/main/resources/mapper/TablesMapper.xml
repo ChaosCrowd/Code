@@ -17,7 +17,7 @@
 
     <insert id="insertTables" parameterType="tables" useGeneratedKeys="false" keyProperty="number">
         insert into tables(number, capacity, status, order_id)
-        values (#{number}, #{capacity}, #{status}, #{orderId});
+        values (#{number}, #{capacity}, #{status}, null);
     </insert>
 
     <delete id="deleteTablesByNumber" parameterType="int">

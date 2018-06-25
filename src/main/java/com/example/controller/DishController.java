@@ -32,6 +32,7 @@ public class DishController {
     /*
     增加菜式
      */
+    @CrossOrigin
     @RequestMapping(value = "/api/*/add/dish", method = RequestMethod.POST)
     @ResponseBody
     public String addDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
@@ -86,6 +87,7 @@ public class DishController {
     }
 
     /*删除菜式*/
+    @CrossOrigin
     @RequestMapping(value = "/api/*/delete/dish", method = RequestMethod.GET)
     @ResponseBody
     public String delDish(@RequestParam(value = "dishID", defaultValue = "-1") int dishid,HttpServletRequest request, HttpServletResponse response) {
@@ -131,6 +133,7 @@ public class DishController {
     }
 
     /*修改菜式*/
+    @CrossOrigin
     @RequestMapping(value = "/api/*/modify/dish", method = RequestMethod.POST)
     @ResponseBody
     public String modifyDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
@@ -189,6 +192,7 @@ public class DishController {
     }
 
     /*查找菜式*/
+    @CrossOrigin
     @RequestMapping(value = "/api/*/query/dish", method = RequestMethod.GET)
     @ResponseBody
     public String getDish(@RequestParam(value = "categoryID", defaultValue = "-1") int id,HttpServletRequest request, HttpServletResponse response) {
