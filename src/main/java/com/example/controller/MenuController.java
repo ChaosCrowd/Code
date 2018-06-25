@@ -4,10 +4,7 @@ import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
-
-//import com.sun.deploy.net.HttpResponse;
 import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.sun.deploy.net.HttpResponse;
 
 @Controller
 @RequestMapping(value = "/api/*/menu")
@@ -60,14 +58,26 @@ public class MenuController extends HttpServlet {
             //获取每个菜品对应的所有菜
             List<Goods> menulist = menuService.getGoodsListByCategory(x);
             for (Goods y : menulist) {
-                JSONObject temp3 = JSONObject.fromObject(y);
+                int id = y.getId();
+                String name = y.getName();
+                String des = y.getDesc();
+                String image = y.getImgSrc();
+                float price = y.getPrice();
+                int volume = y.getVolume();
+                JSONObject temp3 = new JSONObject();
+                temp3.put("id", id);
+                temp3.put("name", name);
+                temp3.put("desc", des);
+                temp3.put("price", price);
+                temp3.put("img_src", image);
+                temp3.put("volume", volume);
                 goodsjson.add(temp3);
             }
             cateoryJSON.put("goods",goodsjson);
             data.add(cateoryJSON);
         }
         jsonObject.put("data", data);
-       System.out.println(jsonObject.toString());
+        System.out.println(jsonObject.toString());
         return jsonObject.toString();
     }
 }

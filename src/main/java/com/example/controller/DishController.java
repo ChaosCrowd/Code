@@ -4,16 +4,12 @@ import com.example.pojo.Category;
 import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -40,9 +36,11 @@ public class DishController {
     @ResponseBody
     public String addDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("Content-Type:application/json");
+        response.setHeader("Content-Type","text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         JSONObject res = new JSONObject();
 
+        //System.out.println(data);
         /* 获取请求body信息 */
         JSONObject json = JSONObject.fromObject(data);
         String dishname = json.getString("dishName");
@@ -62,8 +60,8 @@ public class DishController {
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
         Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), dishimage, 0);
-        int dishid = good.getId();
         if (menuService.addGoods(good)) {
+            int dishid = good.getId();
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject tempjson = new JSONObject();
@@ -76,6 +74,8 @@ public class DishController {
             tempjson1.put("dishDescription", dishDesc);
             tempjson.put("dishInfo", tempjson1);
             res.put("data", tempjson);
+
+            //System.out.println(res.toString());
             return res.toString();
         } else {
             response.setStatus(200);
@@ -93,7 +93,8 @@ public class DishController {
         response.setContentType("Content-Type:application/json");
 
         JSONObject res = new JSONObject();
-        System.out.println(dishid);
+        //
+        // System.out.println(dishid);
         Goods good = menuService.getGoodsById(dishid);
         if (good != null) {
             menuService.deleteGoodsById(dishid);
@@ -139,6 +140,7 @@ public class DishController {
 
         /* 获取请求body信息 */
         JSONObject json = JSONObject.fromObject(data);
+        String dishid = json.getString("dishID");
         String dishname = json.getString("dishName");
         String dishprice = json.getString("dishPrice");
         String dishimage = json.getString("dishImg");
@@ -155,15 +157,22 @@ public class DishController {
             tempint.add(Integer.parseInt(tempList.get(i)));
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
-        Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), dishimage, 0);
-        int dishid = good.getId();
+
+        int tempdishid = Integer.parseInt(dishid);
+        Goods good = menuService.getGoodsById(tempdishid);
+        good.setCate(catelist);
+        good.setDesc(dishDesc);
+        good.setImgSrc(dishimage);
+        good.setName(dishname);
+        good.setPrice(Float.parseFloat(dishprice));
+
         if (menuService.modifyGoods(good)) {
             response.setStatus(200);
             res.put("msg", "OK");
             JSONObject tempjson = new JSONObject();
             JSONObject tempjson1 = new JSONObject();
             tempjson.put("categoryID", tempint);
-            tempjson1.put("dishID", dishid);
+            tempjson1.put("dishID", tempdishid);
             tempjson1.put("dishName", dishname);
             tempjson1.put("dishPrice", Float.parseFloat(dishprice));
             tempjson1.put("dishImg", dishimage);

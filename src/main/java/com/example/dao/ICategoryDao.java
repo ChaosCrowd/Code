@@ -37,7 +37,7 @@ public interface ICategoryDao {
      * @return 插入行的自增主键
      * @throws DataAccessException 插入失败抛出异常
      */
-    public int insertCategory(String name) throws DataAccessException;
+    public int insertCategory(Category category) throws DataAccessException;
 
     /**
      * 通过id删除对应category
