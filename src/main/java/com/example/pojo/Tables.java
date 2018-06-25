@@ -25,7 +25,7 @@ public class Tables {
      * 当前订单id
      * 若无订单则字段为-1
      */
-    private int orderId;
+    private Integer orderId;
 
     /**
      * 默认构造函数
@@ -43,7 +43,7 @@ public class Tables {
         this.number = number;
         this.capacity = capacity;
         this.status = status;
-        this.orderId = -1;
+        this.orderId = null;
     }
 
     public int getNumber() {
