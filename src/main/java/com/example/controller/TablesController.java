@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/*/tables")
 public class TablesController {
     @Autowired
     private ITablesService tablesService;
-
+    @CrossOrigin
     @RequestMapping(value = "/api/*/add/table", method = RequestMethod.GET)
     @ResponseBody
     public String addTable(@RequestParam(value = "tableID", defaultValue = "-1") int tableid, HttpServletRequest request, HttpServletResponse response) {
@@ -38,6 +37,7 @@ public class TablesController {
         return res.toString();
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/api/*/delete/table", method = RequestMethod.GET)
     @ResponseBody
     public String deleteOrder(@RequestParam(value = "tableID", defaultValue = "-1") int tableid, HttpServletRequest request, HttpServletResponse response) {
@@ -57,9 +57,11 @@ public class TablesController {
         }
         return res.toString();
     }
+
+    @CrossOrigin
     @RequestMapping(value = "/api/*/query/table", method = RequestMethod.GET)
     @ResponseBody
-    public String queryTable(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
+    public String queryTable(HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
@@ -70,7 +72,9 @@ public class TablesController {
         for (int i = 0; i < tablelist.size(); i++){
             tablenumberlist.add(tablelist.get(i).getNumber());
         }
-        res.put("data", tablenumberlist);
+        JSONObject temp = new JSONObject();
+        temp.put("tableID",tablenumberlist);
+        res.put("data", temp);
         return res.toString();
     }
 

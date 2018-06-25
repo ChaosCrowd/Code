@@ -22,6 +22,7 @@ public class CategoryController extends HttpServlet {
     private ICategoryService categoryService;
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/api/*/query/category", method = RequestMethod.GET)
     public String getCategory(HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
@@ -49,6 +50,7 @@ public class CategoryController extends HttpServlet {
 
     //修改菜品
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/api/*/modify/category", method = RequestMethod.POST)
     public String renameCate(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
@@ -81,6 +83,7 @@ public class CategoryController extends HttpServlet {
     //增加菜品类型
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/api/*/add/category", method = RequestMethod.POST)
     public String  addCate(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
@@ -111,6 +114,7 @@ public class CategoryController extends HttpServlet {
 
     //删除菜品
     @ResponseBody
+    @CrossOrigin
     @RequestMapping(value = "/api/*/delete/category", method = RequestMethod.GET)
     public String deleteCate(@RequestParam(value = "categoryID", defaultValue = "-1") int id, HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");

@@ -2,18 +2,18 @@ package com.example.pojo;
 
 /**
  * 商铺信息实体
- */
-public class ShopInfo {
-    private String name;
-    private String info;
-    private String iconUrl;
-    private String backgroundUrl;
-    private String telephone;
-    private String address;
-    private boolean status;
+
 
     public ShopInfo() {
-    }
+    } */
+    public class ShopInfo {
+        private String name;
+        private String info;
+        private String iconUrl;
+        private String backgroundUrl;
+        private String telephone;
+        private String address;
+        private boolean status;
 
     public ShopInfo(String name, String info, String iconUrl, String backgroundUrl, String telephone, String address, boolean status) {
         this.name = name;
