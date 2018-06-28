@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * 店铺信息管理controller
  */
 @Controller
+@CrossOrigin
 @RequestMapping(produces = "application/json;charset=utf-8;")
 public class ShopController {
     @Autowired

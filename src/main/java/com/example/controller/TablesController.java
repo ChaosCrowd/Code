@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class TablesController {
     @Autowired
     private ITablesService tablesService;
-    @CrossOrigin
+
     @RequestMapping(value = "/api/*/add/table", method = RequestMethod.GET)
     @ResponseBody
     public String addTable(@RequestParam(value = "tableID", defaultValue = "-1") int tableid, HttpServletRequest request, HttpServletResponse response) {
@@ -37,7 +38,6 @@ public class TablesController {
         return res.toString();
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/api/*/delete/table", method = RequestMethod.GET)
     @ResponseBody
     public String deleteOrder(@RequestParam(value = "tableID", defaultValue = "-1") int tableid, HttpServletRequest request, HttpServletResponse response) {
@@ -58,7 +58,6 @@ public class TablesController {
         return res.toString();
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/api/*/query/table", method = RequestMethod.GET)
     @ResponseBody
     public String queryTable(HttpServletRequest request, HttpServletResponse response) {

@@ -16,13 +16,13 @@ import java.util.List;
 
 @Controller
 
-
+@CrossOrigin
 public class CategoryController extends HttpServlet {
     @Autowired
     private ICategoryService categoryService;
 
     @ResponseBody
-    @CrossOrigin
+
     @RequestMapping(value = "/api/*/query/category", method = RequestMethod.GET)
     public String getCategory(HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");

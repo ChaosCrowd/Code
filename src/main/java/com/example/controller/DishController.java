@@ -18,6 +18,7 @@ import java.util.List;
 
 
 @Controller
+@CrossOrigin
 public class DishController {
     @Autowired
     private IMenuService menuService;
@@ -32,7 +33,7 @@ public class DishController {
     /*
     增加菜式
      */
-    @CrossOrigin
+
     @RequestMapping(value = "/api/*/add/dish", method = RequestMethod.POST)
     @ResponseBody
     public String addDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {

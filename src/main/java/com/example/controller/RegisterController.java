@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 登录、注册controller
  */
-@Controller
+
+@CrossOrigin
+@RestController
 @RequestMapping(path = "/api/*/", produces = "application/json;charset=utf-8;")
 public class RegisterController {
     @Autowired
@@ -26,8 +28,12 @@ public class RegisterController {
 
     private static final Logger logger = Logger.getLogger(RegisterController.class);
 
-    @ResponseBody
-    @CrossOrigin
+    /**
+     * 用户登录验证
+     * @param body
+     * @param response
+     * @return
+     */
     @RequestMapping(value="signin", method = RequestMethod.POST)
     public String signIn(@RequestBody String body, HttpServletResponse response){
         JSONObject jsonObject = JSON.parseObject(body);
@@ -58,14 +64,12 @@ public class RegisterController {
             return JSON.toJSONString(obj);
         } else {    // 验证失败
             logger.debug("login failed.");
-            response.setStatus(401);
+            response.setStatus(409);
             obj = new responseObj("wrong password", null);
             return JSON.toJSONString(obj);
         }
     }
 
-    @ResponseBody
-    @CrossOrigin
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public String  signUp(@RequestBody String body, HttpServletResponse response) {
         JSONObject jsonObject = JSON.parseObject(body);
@@ -92,5 +96,14 @@ public class RegisterController {
         response.setStatus(200);
         // 只传回用户名
         return JSON.toJSONString(new responseObj("OK", JSON.toJSONString(username)));
+    }
+
+
+    @RequestMapping(value = "signout")
+    public String signOut(HttpServletResponse response) {
+        response.setStatus(200);
+        // 覆盖cookies，注销登录
+        response.addCookie(new Cookie("token", null));
+        return JSON.toJSONString(new responseObj("OK", "logout succeed."));
     }
 }

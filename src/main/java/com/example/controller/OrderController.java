@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class OrderController {
     @Autowired
     private IOrderService orderService;
