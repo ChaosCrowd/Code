@@ -28,6 +28,7 @@ public class OrderController {
 
     @RequestMapping(value = "/api/*/order", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
+    @CrossOrigin
     public String uploadOrder(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
@@ -69,6 +70,9 @@ public class OrderController {
         //System.out.println(temp3.toString());
         orderService.addOrder(temp3);
         res.put("msg", "OK");
+        JSONObject tempdata =  new JSONObject();
+        tempdata.put("order_id", temp3.getId());
+        res.put("data", tempdata);
         return res.toString();
 
     }
@@ -76,6 +80,7 @@ public class OrderController {
     //查询订单
     @RequestMapping(value = "/api/*/query/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
+    @CrossOrigin
     public String getOrder(@RequestParam(value = "orderState", defaultValue = "-1") String state, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
@@ -112,6 +117,9 @@ public class OrderController {
 
             temp.put("orderID", id);
 
+            System.out.println("orderid: "+id);
+            System.out.println("goodlistsize: "+goodsidlist.size());
+            System.out.println("goodlistsize: "+cuntlist.size());
             temp.put("orderState", state);
 
             temp.put("tableID", tableid);
@@ -135,6 +143,7 @@ public class OrderController {
     //接受订单
     @RequestMapping(value = "/api/*/accept/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
+    @CrossOrigin
     public String acceptOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
@@ -157,6 +166,7 @@ public class OrderController {
     //拒绝订单
     @RequestMapping(value = "/api/*/refuse/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
+    @CrossOrigin
     public String refuseOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
@@ -176,6 +186,7 @@ public class OrderController {
     //完成订单
     @RequestMapping(value = "/api/*/finish/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
+    @CrossOrigin
     public String finishOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
@@ -204,6 +215,30 @@ public class OrderController {
             res.put("data", temp);
         }
         return res.toString();
+    }
+
+
+
+    @RequestMapping(value = "/api/*/orderStatus", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    @CrossOrigin
+    public String getOrderState(@RequestParam(value = "orderID", defaultValue = "-1") int id, HttpServletRequest request, HttpServletResponse response) {
+        JSONObject res = new JSONObject();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("Content-Type:application/json");
+        Order order = orderService.getOrderById(id);
+        if (order == null) {
+            response.setStatus(404);
+            res.put("msg", "Not Found");
+            return res.toString();
+        }
+        int state = order.getStatus();
+        res.put("msg", "OK");
+        JSONObject temp = new JSONObject();
+        temp.put("status", state);
+        res.put("data",temp);
+        return  res.toString();
+
     }
 
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * 店铺信息管理controller
  */
 @Controller
+@CrossOrigin
 @RequestMapping(produces = "application/json;charset=utf-8;")
 public class ShopController {
     private static final Logger logger = Logger.getLogger(ShopController.class);
@@ -42,13 +43,7 @@ public class ShopController {
         String iconurl = "http://139.199.71.21:8080/image/icon.jpg";
         String backgroundurl = "http://139.199.71.21:8080/image/background.jpg";
 
-        boolean status;
-        //System.out.println(temp_status);
-        if(Integer.parseInt(temp_status) == 1) {
-            status = true;
-        } else {
-            status = false;
-        }
+
         //System.out.println(status);
         ShopInfo preInfo = shopinfoService.getShopInfo();
         boolean flag = false;
@@ -66,7 +61,7 @@ public class ShopController {
             temp.put("notice", notice);
             temp.put("phone", phone);
             temp.put("location", location);
-            temp.put("status", status);
+            temp.put("status", 1);
             logger.info("modify shop information successfully!");
             res.put("data", temp);
         } else {

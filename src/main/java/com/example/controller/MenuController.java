@@ -22,6 +22,7 @@ import java.util.List;
 //import com.sun.deploy.net.HttpResponse;
 
 @Controller
+@CrossOrigin
 @RequestMapping(value = "/api/*/menu")
 public class MenuController extends HttpServlet {
     @Autowired

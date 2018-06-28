@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登录、注册controller
  */
 @Controller
+@CrossOrigin
 @RequestMapping(path = "/api/*/", produces = "application/json;charset=utf-8;")
 public class RegisterController {
     @Autowired
@@ -27,7 +28,7 @@ public class RegisterController {
     private static final Logger logger = Logger.getLogger(RegisterController.class);
 
     @ResponseBody
-    @CrossOrigin
+
     @RequestMapping(value="signin", method = RequestMethod.POST)
     public String signIn(@RequestBody String body, HttpServletResponse response){
         JSONObject jsonObject = JSON.parseObject(body);

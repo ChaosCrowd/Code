@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-
-
+@CrossOrigin
 public class CategoryController extends HttpServlet {
     //log日志
     private static final Logger logger = Logger.getLogger(CategoryController.class);
@@ -49,7 +48,6 @@ public class CategoryController extends HttpServlet {
                 temp3.put("categoryName", temp.get(i).getName());
                 temp1.add(temp3);
             }
-
             json.put("data", temp1);
             logger.info("query category successfully!");
             return json.toString();

@@ -72,16 +72,18 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!-- path表示拦截路径 暂时除sign操作外全部拦截  客户端另议 -->
-            <mvc:mapping path="/api/*/add"/>
-            <mvc:mapping path="/api/*/delete"/>
-            <mvc:mapping path="/api/*/modify"/>
-            <mvc:mapping path="/api/*/query"/>
-            <mvc:mapping path="/api/*/accept"/>
-            <mvc:mapping path="/api/*/refuse"/>
-            <mvc:mapping path="/api/*/finish"/>
+            <mvc:mapping path="/api/*/add/*"/>
+            <mvc:mapping path="/api/*/delete/*"/>
+            <mvc:mapping path="/api/*/modify/*"/>
+            <mvc:mapping path="/api/*/query/*"/>
+            <mvc:mapping path="/api/*/accept/*"/>
+            <mvc:mapping path="/api/*/refuse/*"/>
+            <mvc:mapping path="/api/*/finish/*"/>
             <bean class="com.example.interceptor.VerifyInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+
 
     <mvc:annotation-driven >
         <!-- 消息转换器 -->

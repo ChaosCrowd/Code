@@ -45,5 +45,7 @@
     <listener>
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
     </listener>
+
+
     <display-name>Archetype Created Web Application</display-name>
 </web-app>

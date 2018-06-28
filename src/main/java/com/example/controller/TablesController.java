@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RequestMapping(produces = "application/json;charset=utf-8;")
 public class TablesController {
     @Autowired
