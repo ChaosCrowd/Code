@@ -54,6 +54,16 @@
             and goods_category.category_id = category.id;
     </select>
 
+    <select id="getGoodsNotInCate" resultMap="goodsMap">
+        select
+            goods.*
+        from
+            goods
+        where
+            goods.id not in (select goods_id from goods_category)
+            and goods.active = 1
+    </select>
+
     <select id="getGoodsListByCategory" resultMap="goodsMap">
         select
             goods.*,
@@ -103,7 +113,7 @@
     </delete>
 
     <update id="updateGoods" parameterType="goods">
-        update goods set name = #{name}, `desc` = #{desc}, price = #{price}, image_src = #{imgSrc}
+        update goods set name = #{name}, `desc` = #{desc}, price = #{price}, image_src = #{imgSrc}, volume = #{volume}
           where id = #{id};
     </update>
 

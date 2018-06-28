@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping(produces = "application/json;charset=utf-8;")
 public class TablesController {
     @Autowired
     private ITablesService tablesService;
@@ -65,7 +66,7 @@ public class TablesController {
         JSONObject res = new JSONObject();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
-
+        response.setStatus(200);
         res.put("msg", "OK");
         List<Tables> tablelist = tablesService.getTablesList();
         List<Integer> tablenumberlist = new ArrayList<Integer>();

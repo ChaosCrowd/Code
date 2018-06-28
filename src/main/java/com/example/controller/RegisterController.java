@@ -66,7 +66,7 @@ public class RegisterController {
 
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(value = "signup", method = RequestMethod.POST)
+    @RequestMapping(value = "signup", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public String  signUp(@RequestBody String body, HttpServletResponse response) {
         JSONObject jsonObject = JSON.parseObject(body);
         String username = jsonObject.get("username").toString();

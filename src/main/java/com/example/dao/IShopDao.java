@@ -22,6 +22,8 @@ public interface IShopDao {
      * @param shopInfo
      * @return 变更行数
      */
+    public int insertShopInfo(ShopInfo shopInfo);
+
     public int updateShopInfo(ShopInfo shopInfo);
 
     /**

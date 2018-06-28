@@ -14,6 +14,8 @@ public interface IShopService {
      * @param shopInfo
      * @return
      */
+    public boolean addShopInfo(ShopInfo shopInfo);
+
     public boolean modifyShopInfo(ShopInfo shopInfo);
 
     /**

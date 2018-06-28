@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service
 public class MenuServiceImpl implements IMenuService {
-    private static final Logger LOGGER = Logger.getLogger(MenuServiceImpl.class);
+    //private static final Logger LOGGER = Logger.getLogger(MenuServiceImpl.class);
     /**
      * 自动注入的DAO
      */
@@ -27,6 +27,10 @@ public class MenuServiceImpl implements IMenuService {
         return goodsDao.getAllGoods();
     }
 
+    @Override
+    public List<Goods> getGoodsListNotInCate() {
+        return goodsDao.getGoodsNotInCate();
+    }
     @Override
     public List<Goods> getGoodsListByCategory(Category category) {
         return goodsDao.getGoodsListByCategory(category);
@@ -50,7 +54,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -72,7 +76,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -81,7 +85,7 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public boolean modifyGoods(Goods goods) {
         int id = goods.getId();
-        System.out.println(id);
+        //System.out.println(id);
         Goods previousGoods = goodsDao.getGoodsById(id);
         try {
             if (goodsDao.updateGoods(goods) > 0) {
@@ -96,7 +100,7 @@ public class MenuServiceImpl implements IMenuService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }

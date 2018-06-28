@@ -5,6 +5,7 @@ import com.example.pojo.Goods;
 import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
 import net.sf.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,14 +27,17 @@ public class MenuController extends HttpServlet {
     @Autowired
     private IMenuService menuService;
 
+    private static final Logger logger = Logger.getLogger(MenuController.class);
     @Autowired
     private ICategoryService categoryService;
 
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public String getMenu(HttpServletRequest request, HttpServletResponse response){
         //response.setHeader("content-type", "text/html;charset=UTF-8");
+        //System.out.println("Path: "+System.getProperty("evan.webapp"));
+
         response.setCharacterEncoding("UTF-8");
         response.setContentType("Content-Type:application/json");
 
@@ -79,7 +83,7 @@ public class MenuController extends HttpServlet {
             data.add(cateoryJSON);
         }
         jsonObject.put("data", data);
-        System.out.println(jsonObject.toString());
+        //System.out.println(jsonObject.toString());
         return jsonObject.toString();
     }
 }

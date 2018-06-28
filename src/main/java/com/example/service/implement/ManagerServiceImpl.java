@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ManagerServiceImpl implements IManagerService {
-    private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
+    //private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     /**
      * 自动注入的DAO
      */

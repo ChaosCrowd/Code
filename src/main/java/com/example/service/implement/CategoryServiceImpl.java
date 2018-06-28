@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements ICategoryService {
-    private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
+   // private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     /**
      * 自动注入的DAO
      */
@@ -48,7 +48,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -69,7 +69,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -84,7 +84,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }

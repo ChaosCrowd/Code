@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class OrderController {
     @Autowired
     private IOrderService orderService;
@@ -25,7 +26,7 @@ public class OrderController {
     @Autowired
     private IMenuService menuService;
 
-    @RequestMapping(value = "/api/*/order", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/*/order", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String uploadOrder(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
@@ -72,8 +73,8 @@ public class OrderController {
 
     }
 
-
-    @RequestMapping(value = "/api/*/query/order", method = RequestMethod.GET)
+    //查询订单
+    @RequestMapping(value = "/api/*/query/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getOrder(@RequestParam(value = "orderState", defaultValue = "-1") String state, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
@@ -83,56 +84,56 @@ public class OrderController {
         //状态string转int
         //System.out.println(state);
         int stateid = 2;
-        if (state == "unaccepted") {
+        if (state.equals("unaccepted")) {
             stateid = 2;
-        } else if (state == "accepted") {
+        } else if (state.equals("accepted")) {
             stateid = 3;
-        } else if (state == "finished") {
+        } else if (state.equals("finished")) {
             stateid = 4;
-        } else if (state == "refused") {
+        } else if (state.equals("refused")) {
             stateid = 5;
         }
+        System.out.println("sta : "+stateid);
         List<Order> orderlist = orderService.getOrdersListByStatus(stateid);
-        if (orderlist.size() != 0) {
-            response.setStatus(200);
-            res.put("msg", "OK");
-            JSONArray json = new JSONArray();
+        response.setStatus(200);
+        res.put("msg", "OK");
+        JSONArray json = new JSONArray();
 
-            for (int i = 0; i < orderlist.size(); i++) {
-                JSONObject temp = new JSONObject();
-                int id = orderlist.get(i).getId();
-                int tableid = orderlist.get(i).getTablesNumber();
-                //时间
-                Date date = orderlist.get(i).getAddDate();
-                long t = date.getTime();
-                List<Integer> goodsidlist = orderlist.get(i).getGoodsId();
-                List<Integer> cuntlist = orderlist.get(i).getGoodsCount();
-                float price = orderlist.get(i).getPrice();
+        for (int i = 0; i < orderlist.size(); i++) {
+            JSONObject temp = new JSONObject();
+            int id = orderlist.get(i).getId();
+            int tableid = orderlist.get(i).getTablesNumber();
+            //时间
+            Date date = orderlist.get(i).getAddDate();
+            long t = date.getTime();
+            List<Integer> goodsidlist = orderlist.get(i).getGoodsId();
+            List<Integer> cuntlist = orderlist.get(i).getGoodsCount();
+            float price = orderlist.get(i).getPrice();
 
-                temp.put("orderID", id);
+            temp.put("orderID", id);
 
-                temp.put("orderState", state);
+            temp.put("orderState", state);
 
-                temp.put("tableID", tableid);
-                temp.put("time", t);
-                temp.put("totlePrice", price);
-                JSONArray temp1 = new JSONArray();
-                for (int j = 0; j < goodsidlist.size(); j++) {
-                    JSONObject temp2 = new JSONObject();
-                    temp2.put("dishID", goodsidlist.get(j));
-                    temp2.put("dishNum", cuntlist.get(j));
-                    temp1.add(temp2);
-                }
-                temp.put("orderContent", temp1);
-                json.add(temp);
+            temp.put("tableID", tableid);
+            temp.put("time", t);
+            temp.put("totlePrice", price);
+            JSONArray temp1 = new JSONArray();
+            for (int j = 0; j < goodsidlist.size(); j++) {
+                JSONObject temp2 = new JSONObject();
+                temp2.put("dishID", goodsidlist.get(j));
+                temp2.put("dishNum", cuntlist.get(j));
+                temp1.add(temp2);
             }
-            res.put("data", json);
+            temp.put("orderContent", temp1);
+            json.add(temp);
         }
+        res.put("data", json);
+
         return res.toString();
     }
 
     //接受订单
-    @RequestMapping(value = "/api/*/accept/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/*/accept/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String acceptOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
@@ -140,6 +141,9 @@ public class OrderController {
         response.setContentType("Content-Type:application/json");
 
         Order order = orderService.getOrderById(orderid);
+
+
+
         order.setStatus(3);
         if (orderService.modifyOrder(order)) {
             res.put("msg", "OK");
@@ -151,7 +155,7 @@ public class OrderController {
     }
 
     //拒绝订单
-    @RequestMapping(value = "/api/*/refuse/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/*/refuse/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String refuseOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
@@ -170,7 +174,7 @@ public class OrderController {
     }
 
     //完成订单
-    @RequestMapping(value = "/api/*/finish/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/*/finish/order", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String finishOrder(@RequestParam(value = "orderID", defaultValue = "-1") int orderid, HttpServletRequest request, HttpServletResponse response) {
         JSONObject res = new JSONObject();
@@ -178,6 +182,20 @@ public class OrderController {
         response.setContentType("Content-Type:application/json");
 
         Order order = orderService.getOrderById(orderid);
+
+        //设置销量
+        ArrayList<Integer> goodsidlist = order.getGoodsId();
+        ArrayList<Integer> countlist = order.getGoodsCount();
+        //System.out.println("volume： "+goodsidlist.size());
+        for (int i  = 0; i < goodsidlist.size();i++) {
+            Goods good = menuService.getGoodsById(goodsidlist.get(i));
+            int preVolume = good.getVolume();
+            //System.out.println("pre: "+preVolume);
+            good.setVolume(preVolume+countlist.get(i));
+            //System.out.println("good id  "+ good.getId());
+            menuService.modifyGoods(good);
+        }
+
         order.setStatus(4);
         if (orderService.modifyOrder(order)) {
             res.put("msg", "OK");

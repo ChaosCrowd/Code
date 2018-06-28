@@ -20,6 +20,11 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
+    public boolean addShopInfo(ShopInfo shopInfo) {
+        return(shopDao.insertShopInfo(shopInfo) > 0);
+    }
+
+    @Override
     public boolean modifyShopInfo(ShopInfo shopInfo) {
         return (shopDao.updateShopInfo(shopInfo) > 0);
     }

@@ -20,22 +20,24 @@
         <property name="location" value="classpath:conf/jdbc.properties" />
     </bean>
 
+
+
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="${driver}" />
-        <property name="url" value="${url}" />
-        <property name="username" value="${username}" />
-        <property name="password" value="${password}" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
         <!-- 初始化连接大小 -->
-        <property name="initialSize" value="${initialSize}"></property>
+        <property name="initialSize" value="${jdbc.initialSize}"></property>
         <!-- 连接池最大数量 -->
-        <property name="maxActive" value="${maxActive}"></property>
+        <property name="maxActive" value="${jdbc.maxActive}"></property>
         <!-- 连接池最大空闲 -->
-        <property name="maxIdle" value="${maxIdle}"></property>
+        <property name="maxIdle" value="${jdbc.maxIdle}"></property>
         <!-- 连接池最小空闲 -->
-        <property name="minIdle" value="${minIdle}"></property>
+        <property name="minIdle" value="${jdbc.minIdle}"></property>
         <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="${maxWait}"></property>
+        <property name="maxWait" value="${jdbc.maxWait}"></property>
     </bean>
 
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
@@ -70,12 +72,13 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!-- path表示拦截路径 暂时除sign操作外全部拦截  客户端另议 -->
-            <mvc:mapping path="/api/*/category"/>
-            <mvc:mapping path="/api/*/dish"/>
-            <mvc:mapping path="/api/*/dishes"/>
-            <mvc:mapping path="/api/*/menu"/>
-            <mvc:mapping path="/api/*/order"/>
-            <mvc:mapping path="/api/*/tables"/>
+            <mvc:mapping path="/api/*/add"/>
+            <mvc:mapping path="/api/*/delete"/>
+            <mvc:mapping path="/api/*/modify"/>
+            <mvc:mapping path="/api/*/query"/>
+            <mvc:mapping path="/api/*/accept"/>
+            <mvc:mapping path="/api/*/refuse"/>
+            <mvc:mapping path="/api/*/finish"/>
             <bean class="com.example.interceptor.VerifyInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
@@ -84,7 +87,14 @@
         <!-- 消息转换器 -->
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+                <property name="supportedMediaTypes">
+                <list>
+                    <value>text/plain;charset=UTF-8</value>
+                    <value>text/html;charset=UTF-8</value>
+                    <value>applicaiton/javascript;charset=UTF-8</value>
+                    <value>applicaiton/json;charset=UTF-8</value>
+                </list>
+                </property>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>

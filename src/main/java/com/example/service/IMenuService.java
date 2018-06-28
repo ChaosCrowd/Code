@@ -16,6 +16,9 @@ public interface IMenuService {
      */
     public List<Goods> getGoodsList();
 
+
+    public List<Goods> getGoodsListNotInCate();
+
     /**
      * 获取某类别下所有商品
      * @param category 商品类别名

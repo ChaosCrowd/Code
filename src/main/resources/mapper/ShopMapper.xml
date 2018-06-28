@@ -32,6 +32,11 @@
             backgrouund_url = #{backgroundUrl},
             telephone = #{telephone},
             address = #{address},
-            status = #{status};
+            status = #{status}
     </update>
+
+    <insert id="insertShopInfo" parameterType="shopInfo">
+        insert into shop_info (name, info, icon_url, backgrouund_url, telephone, address, status)
+        values (#{name},#{info},#{iconUrl},#{backgroundUrl},#{telephone},#{address},#{status});
+    </insert>
 </mapper>

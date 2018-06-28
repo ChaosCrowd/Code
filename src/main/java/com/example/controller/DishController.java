@@ -6,26 +6,32 @@ import com.example.service.ICategoryService;
 import com.example.service.IMenuService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 @Controller
+@CrossOrigin
+@RequestMapping(produces = "application/json; charset=utf-8")
 public class DishController {
     @Autowired
     private IMenuService menuService;
     @Autowired
     private ICategoryService categoryService;
-
-
-
+    private static final Logger logger = Logger.getLogger(DishController.class);
+    public static  final String my_separator = File.separator;
 
     /*商家端api*/
 
@@ -35,7 +41,9 @@ public class DishController {
     @CrossOrigin
     @RequestMapping(value = "/api/*/add/dish", method = RequestMethod.POST)
     @ResponseBody
-    public String addDish(@RequestBody String data, HttpServletRequest request, HttpServletResponse response) {
+    public String addDish(@RequestBody String data, HttpServletResponse response) {
+        logger.info("add dish!");
+
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-Type","text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -52,15 +60,75 @@ public class DishController {
         String cateid = json.getString("categoryID");
         String demosub = cateid.substring(1,cateid.length()-1);
         String demoArray[] = demosub.split(",");
+
+        //图片处理
+
+        String imgURL = "http://";
+        if(dishimage==null)
+            return null;
+        String data1="";
+        String dataprefix="";
+
+        String[] str=dishimage.split("base64,");
+        if(str==null||str.length!=2)
+            return null;
+        dataprefix=str[0];
+        data1=str[1];
+        String suffix = "";
+        if("data:image/jpeg;".equalsIgnoreCase(dataprefix)){//data:image/jpeg;base64,base64编码的jpeg图片数据
+            suffix = ".jpg";
+        } else if("data:image/x-icon;".equalsIgnoreCase(dataprefix)){//data:image/x-icon;base64,base64编码的icon图片数据
+            suffix = ".ico";
+        } else if("data:image/gif;".equalsIgnoreCase(dataprefix)){//data:image/gif;base64,base64编码的gif图片数据
+            suffix = ".gif";
+        } else if("data:image/png;".equalsIgnoreCase(dataprefix)){//data:image/png;base64,base64编码的png图片数据
+            suffix = ".png";
+        }
+
+        //因为BASE64Decoder的jar问题，此处使用spring框架提供的工具包
+        try {
+            String path = System.getProperty("evan.webapp");
+            path += "statics";
+            path += my_separator;
+            path += "image";
+            path += my_separator;
+            logger.info("path "+ path);
+            System.out.println(path);
+            File tempfile = new File(path);
+            if (!tempfile.exists()) {
+                tempfile.mkdirs();
+            }
+            Long picname = System.currentTimeMillis();
+            path += picname;
+            path += suffix;
+            byte[] bs = Base64Utils.decodeFromString(data1);
+            //System.out.println(bs);
+            File f = new File(path);
+            f.setWritable(true, false);
+            FileUtils.writeByteArrayToFile(f, bs);
+
+
+
+
+
+            imgURL += "139.199.71.21:8080/ordering/image/";
+            imgURL += picname;
+            imgURL += suffix;
+            System.out.println(imgURL);
+        } catch (Exception e) {
+            logger.error(e);
+            e.printStackTrace();
+        }
+
         List<String> tempList = Arrays.asList(demoArray);
         List<Integer> tempint = new ArrayList<Integer>();
         ArrayList<Category> catelist = new ArrayList<Category>();
         for (int i = 0; i < tempList.size(); i++) {
-            System.out.println(Integer.parseInt(tempList.get(i)));
+            //System.out.println(Integer.parseInt(tempList.get(i)));
             tempint.add(Integer.parseInt(tempList.get(i)));
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
-        Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), dishimage, 0);
+        Goods good = new Goods(dishname, dishDesc, catelist, Float.parseFloat(dishprice), imgURL, 0);
         if (menuService.addGoods(good)) {
             int dishid = good.getId();
             response.setStatus(200);
@@ -71,20 +139,23 @@ public class DishController {
             tempjson1.put("dishID", dishid);
             tempjson1.put("dishName", dishname);
             tempjson1.put("dishPrice", Float.parseFloat(dishprice));
-            tempjson1.put("dishImg", dishimage);
+            tempjson1.put("dishImg",imgURL);
             tempjson1.put("dishDescription", dishDesc);
             tempjson.put("dishInfo", tempjson1);
             res.put("data", tempjson);
 
+            logger.info("add dish successfully!");
             //System.out.println(res.toString());
             return res.toString();
         } else {
             response.setStatus(200);
             res.put("msg", "没有权限");
             res.put("data","");
+            logger.info("add dish failed!");
             return  res.toString();
         }
     }
+
 
     /*删除菜式*/
     @CrossOrigin
@@ -152,22 +223,98 @@ public class DishController {
         String cateid = json.getString("categoryID");
         String demosub = cateid.substring(1,cateid.length()-1);
         String demoArray[] = demosub.split(",");
+        if (demosub.length() == 0) {
+            demoArray = new String[] {};
+        }
         List<String> tempList = Arrays.asList(demoArray);
         List<Integer> tempint = new ArrayList<Integer>();
+        System.out.println("12: "+demosub);
         ArrayList<Category> catelist = new ArrayList<Category>();
+
         for (int i = 0; i < tempList.size(); i++) {
-            System.out.println(Integer.parseInt(tempList.get(i)));
+            //System.out.println(Integer.parseInt(tempList.get(i)));
             tempint.add(Integer.parseInt(tempList.get(i)));
             catelist.add(categoryService.getCategoryById(Integer.parseInt(tempList.get(i))));
         }
 
+        //得到要处理的goods
         int tempdishid = Integer.parseInt(dishid);
         Goods good = menuService.getGoodsById(tempdishid);
-        good.setCate(catelist);
-        good.setDesc(dishDesc);
-        good.setImgSrc(dishimage);
-        good.setName(dishname);
-        good.setPrice(Float.parseFloat(dishprice));
+
+        //图片处理
+        if (!dishimage.equals("")) {
+            String imgURL = "http://";
+            if(dishimage==null)
+                return null;
+            String data1="";
+            String dataprefix="";
+
+            String[] str=dishimage.split("base64,");
+            if(str==null||str.length!=2)
+                return null;
+            dataprefix=str[0];
+            data1=str[1];
+            String suffix = "";
+            if("data:image/jpeg;".equalsIgnoreCase(dataprefix)){//data:image/jpeg;base64,base64编码的jpeg图片数据
+                suffix = ".jpg";
+            } else if("data:image/x-icon;".equalsIgnoreCase(dataprefix)){//data:image/x-icon;base64,base64编码的icon图片数据
+                suffix = ".ico";
+            } else if("data:image/gif;".equalsIgnoreCase(dataprefix)){//data:image/gif;base64,base64编码的gif图片数据
+                suffix = ".gif";
+            } else if("data:image/png;".equalsIgnoreCase(dataprefix)){//data:image/png;base64,base64编码的png图片数据
+                suffix = ".png";
+            }
+
+            //因为BASE64Decoder的jar问题，此处使用spring框架提供的工具包
+            try {
+                String path = System.getProperty("evan.webapp");
+                path += "statics";
+                path += my_separator;
+                path += "image";
+                path += my_separator;
+                File tempfile = new File(path);
+                if (!tempfile.exists()) {
+                    tempfile.mkdirs();
+                }
+                Long picname = System.currentTimeMillis();
+                path += picname;
+                path += suffix;
+                byte[] bs = Base64Utils.decodeFromString(data1);
+                //System.out.println(bs);
+                File f = new File(path);
+                f.setWritable(true, false);
+                FileUtils.writeByteArrayToFile(f, bs);
+
+
+
+
+
+                imgURL += "139.199.71.21:8080/ordering/image/";
+                imgURL += picname;
+                imgURL += suffix;
+
+                //重新设置图片
+                good.setImgSrc(imgURL);
+                //System.out.println(imgURL);
+            } catch (Exception e) {
+                logger.error(e);
+                e.printStackTrace();
+            }
+
+        }
+        if (catelist.size() != 0) {
+            good.setCate(catelist);
+        }
+        if (!dishDesc.equals("")) {
+            good.setDesc(dishDesc);
+        }
+        if (!dishname.equals("")) {
+            good.setName(dishname);
+        }
+        if (!dishprice.equals("")) {
+            good.setPrice(Float.parseFloat(dishprice));
+        }
+
 
         if (menuService.modifyGoods(good)) {
             response.setStatus(200);
@@ -178,7 +325,7 @@ public class DishController {
             tempjson1.put("dishID", tempdishid);
             tempjson1.put("dishName", dishname);
             tempjson1.put("dishPrice", Float.parseFloat(dishprice));
-            tempjson1.put("dishImg", dishimage);
+            tempjson1.put("dishImg", good.getImgSrc());
             tempjson1.put("dishDescription", dishDesc);
             tempjson.put("dishInfo", tempjson1);
             res.put("data", tempjson);
@@ -200,41 +347,75 @@ public class DishController {
         response.setContentType("Content-Type:application/json");
 
         JSONObject res = new JSONObject();
-
-        Category cate = categoryService.getCategoryById(id);
-        List<Integer> categoryid = new ArrayList<Integer>();
-        categoryid.add(id);
-        if (cate != null) {
-            response.setStatus(200);
-            res.put("msg", "OK");
-            List<Goods> dishlist = menuService.getGoodsListByCategory(cate);
-            JSONArray templist = new JSONArray();
-            JSONObject tempjson = new JSONObject();
-            tempjson.put("categoryID", categoryid);
-            for (int i = 0; i < dishlist.size(); i++) {
-                Goods good = dishlist.get(i);
-                String dishname = good.getName();
-                float dishprice = good.getPrice();
-                String dishimage = good.getImgSrc();
-                String dishDesc = good.getDesc();
-                //String volume = json.getString("dishVolume"
-                JSONObject tempjson1 = new JSONObject();
-                tempjson1.put("dishID", good.getId());
-                tempjson1.put("dishName", dishname);
-                tempjson1.put("dishPrice", dishprice);
-                tempjson1.put("dishImg", dishimage);
-                tempjson1.put("dishDescription", dishDesc);
-                templist.add(tempjson1);
+        System.out.println(id);
+        if (id != -1) {
+            Category cate = categoryService.getCategoryById(id);
+            List<Integer> categoryid = new ArrayList<Integer>();
+            categoryid.add(id);
+            if (cate != null) {
+                response.setStatus(200);
+                res.put("msg", "OK");
+                List<Goods> dishlist = menuService.getGoodsListByCategory(cate);
+                JSONArray templist = new JSONArray();
+                JSONObject tempjson = new JSONObject();
+                tempjson.put("categoryID", categoryid);
+                for (int i = 0; i < dishlist.size(); i++) {
+                    Goods good = dishlist.get(i);
+                    String dishname = good.getName();
+                    float dishprice = good.getPrice();
+                    String dishimage = good.getImgSrc();
+                    String dishDesc = good.getDesc();
+                    //String volume = json.getString("dishVolume"
+                    JSONObject tempjson1 = new JSONObject();
+                    tempjson1.put("dishID", good.getId());
+                    tempjson1.put("dishName", dishname);
+                    tempjson1.put("dishPrice", dishprice);
+                    tempjson1.put("dishImg", dishimage);
+                    tempjson1.put("dishDescription", dishDesc);
+                    templist.add(tempjson1);
+                }
+                tempjson.put("dishInfo", templist);
+                res.put("data", tempjson);
+                return res.toString();
+            } else {
+                response.setStatus(404);
+                res.put("msg", "not found");
+                res.put("data", "");
+                return res.toString();
             }
-            tempjson.put("dishInfo", templist);
-            res.put("data", tempjson);
-            return res.toString();
         } else {
-            response.setStatus(403);
-            res.put("mag", "没有权限");
-            res.put("data", "");
+            //返回active=1但并未归类的菜
+            response.setStatus(200);
+            List<Integer> categoryid = new ArrayList<Integer>();
+            categoryid.add(-1);
+            List<Goods> goodslist1 = menuService.getGoodsListNotInCate();
+            System.out.println("Goodsize "+goodslist1.size());
+            JSONArray templist = new JSONArray();
+            res.put("msg", "OK");
+            for (int i = 0; i < goodslist1.size(); i++) {
+                if (goodslist1.get(i).getCate().size() == 0) {
+                    Goods good = goodslist1.get(i);
+                    String dishname = good.getName();
+                    float dishprice = good.getPrice();
+                    String dishimage = good.getImgSrc();
+                    String dishDesc = good.getDesc();
+                    //String volume = json.getString("dishVolume"
+                    JSONObject tempjson1 = new JSONObject();
+                    tempjson1.put("dishID", good.getId());
+                    tempjson1.put("dishName", dishname);
+                    tempjson1.put("dishPrice", dishprice);
+                    tempjson1.put("dishImg", dishimage);
+                    tempjson1.put("dishDescription", dishDesc);
+                    templist.add(tempjson1);
+                }
+            }
+            JSONObject tempdata = new JSONObject();
+            tempdata.put("categoryID", categoryid);
+            tempdata.put("dishInfo", templist);
+            res.put("data", tempdata);
             return res.toString();
         }
+
 
     }
 

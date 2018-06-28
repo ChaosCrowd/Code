@@ -21,6 +21,9 @@ public interface IGoodsDao {
      */
     public List<Goods> getAllGoods();
 
+
+    public List<Goods> getGoodsNotInCate();
+
     // 废弃方法（category已定义成新类型）
     // public List<String> getAllCategories();
 

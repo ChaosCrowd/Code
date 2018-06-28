@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements IOrderService {
-    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
+   // private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
     /**
      * 自动注入的DAO接口
      */
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements IOrderService {
         } catch (Exception e) {
             //System.out.println("1");
             System.out.println(e);
-            LOGGER.error(e);
+            //LOGGER.error(e);
             return false;
         }
     }
@@ -96,7 +96,7 @@ public class OrderServiceImpl implements IOrderService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
@@ -115,7 +115,7 @@ public class OrderServiceImpl implements IOrderService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error(e);
+            //LOGGER.error(e);
             System.out.println(e);
             return false;
         }
