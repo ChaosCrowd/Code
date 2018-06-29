@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 登录、注册controller
@@ -30,11 +31,17 @@ public class RegisterController {
     @ResponseBody
 
     @RequestMapping(value="signin", method = RequestMethod.POST)
-    public String signIn(@RequestBody String body, HttpServletResponse response){
+    public String signIn(@RequestBody String body, HttpServletResponse response, HttpSession session){
+
+
         JSONObject jsonObject = JSON.parseObject(body);
         String username = jsonObject.get("username").toString();
         String password = jsonObject.get("password").toString();
         logger.debug("sign in: " + username + " " + password);
+
+        //
+
+
         // password为null时，加密方法会出错
         if (null == password) {
             password = "null";
@@ -51,6 +58,9 @@ public class RegisterController {
                 String token = JwtTokenUtils.createToken(username);
                 Cookie cookie = new Cookie("token", token);
                 response.addCookie(cookie);
+
+                session.setAttribute("username", token);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("create token error : " + username);

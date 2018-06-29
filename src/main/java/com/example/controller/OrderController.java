@@ -4,12 +4,16 @@ import com.example.pojo.Goods;
 import com.example.pojo.Order;
 import com.example.service.IMenuService;
 import com.example.service.IOrderService;
+import com.example.websocket.MyHandler;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.TextMessage;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
@@ -20,6 +24,9 @@ import java.util.List;
 @Controller
 @CrossOrigin
 public class OrderController {
+
+    MyHandler handler = new MyHandler();
+
     @Autowired
     private IOrderService orderService;
 
@@ -73,6 +80,38 @@ public class OrderController {
         JSONObject tempdata =  new JSONObject();
         tempdata.put("order_id", temp3.getId());
         res.put("data", tempdata);
+
+        JSONObject temp4 = new JSONObject();
+        int id = temp3.getId();
+        int tableid = temp3.getTablesNumber();
+        //时间
+        Date datetemp = temp3.getAddDate();
+        long t = datetemp.getTime();
+        List<Integer> goodsidlist = temp3.getGoodsId();
+        List<Integer> cuntlist = temp3.getGoodsCount();
+        float price = temp3.getPrice();
+
+        temp4.put("orderID", id);
+
+
+        temp4.put("orderState", "unaccepted");
+
+        temp4.put("tableID", tableid);
+        temp4.put("time", t);
+        temp4.put("totlePrice", price);
+        JSONArray temp1 = new JSONArray();
+        for (int j = 0; j < goodsidlist.size(); j++) {
+            JSONObject temp2 = new JSONObject();
+            temp2.put("dishID", goodsidlist.get(j));
+            temp2.put("dishNum", cuntlist.get(j));
+            temp1.add(temp2);
+        }
+        temp4.put("orderContent", temp1);
+
+
+        //System.out.println("uuuuuuu :   *** "+token);
+        boolean hasSend = handler.sendMessageToAllUsers(new TextMessage(temp4.toString()));
+        System.out.println(hasSend+ " message "+temp4.toString());
         return res.toString();
 
     }
