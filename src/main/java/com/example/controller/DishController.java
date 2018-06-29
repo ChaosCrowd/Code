@@ -93,7 +93,7 @@ public class DishController {
             path += "image";
             path += my_separator;
             logger.info("path "+ path);
-            System.out.println(path);
+            //System.out.println(path);
             File tempfile = new File(path);
             if (!tempfile.exists()) {
                 tempfile.mkdirs();
@@ -114,7 +114,7 @@ public class DishController {
             imgURL += "139.199.71.21:8080/ordering/image/";
             imgURL += picname;
             imgURL += suffix;
-            System.out.println(imgURL);
+            //System.out.println(imgURL);
         } catch (Exception e) {
             logger.error(e);
             e.printStackTrace();
@@ -228,7 +228,7 @@ public class DishController {
         }
         List<String> tempList = Arrays.asList(demoArray);
         List<Integer> tempint = new ArrayList<Integer>();
-        System.out.println("12: "+demosub);
+        //System.out.println("12: "+demosub);
         ArrayList<Category> catelist = new ArrayList<Category>();
 
         for (int i = 0; i < tempList.size(); i++) {
@@ -347,7 +347,7 @@ public class DishController {
         response.setContentType("Content-Type:application/json");
 
         JSONObject res = new JSONObject();
-        System.out.println(id);
+        //System.out.println(id);
         if (id != -1) {
             Category cate = categoryService.getCategoryById(id);
             List<Integer> categoryid = new ArrayList<Integer>();
@@ -389,7 +389,7 @@ public class DishController {
             List<Integer> categoryid = new ArrayList<Integer>();
             categoryid.add(-1);
             List<Goods> goodslist1 = menuService.getGoodsListNotInCate();
-            System.out.println("Goodsize "+goodslist1.size());
+            //System.out.println("Goodsize "+goodslist1.size());
             JSONArray templist = new JSONArray();
             res.put("msg", "OK");
             for (int i = 0; i < goodslist1.size(); i++) {

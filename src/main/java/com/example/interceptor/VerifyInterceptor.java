@@ -31,9 +31,9 @@ public class VerifyInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         logger.debug("Access token executing...");
-        System.out.println(("Access!"));
+        //System.out.println(("Access!"));
         //response.setStatus(200);
-        System.out.println(request.getMethod());
+        //System.out.println(request.getMethod());
 
         /*response.addHeader("Access-Control-Allow-Origin","*");
         response.addHeader("Access-Control-Allow-Credentials", "true");
@@ -41,7 +41,7 @@ public class VerifyInterceptor extends HandlerInterceptorAdapter {
         response.addHeader("Access-Control-Allow-Headers", "Content-Type");*/
         response.addHeader("Access-Control-Max-Age", "360000");
         //response.setHeader("Access-Control-Allow-Headers", "If-Modified-Since");
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        response.setHeader("Access-Control-Allow-Origin", "http://139.199.71.21:8080");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -55,7 +55,7 @@ public class VerifyInterceptor extends HandlerInterceptorAdapter {
         if (request.getMethod().equals("OPTIONS")) {
             /*System.out.println("111111");*/
             response.setStatus(200);
-            System.out.println(response.getStatus());
+            //System.out.println(response.getStatus());
             return true;
         }
         // 标记，用于最后返回值
@@ -86,16 +86,16 @@ public class VerifyInterceptor extends HandlerInterceptorAdapter {
                 flag = managerService.isUsernameExist(name);
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                System.out.println("权限认证失败");
+                //System.out.println("权限认证失败");
                 logger.debug("权限认证失败");
             }
         }
         if (!flag) {    // 验证失败时设置response错误码
             response.setStatus(401);
-            System.out.println("ttttt");
+            //System.out.println("ttttt");
 
         }
-        System.out.println("222: "+response.getStatus());
+        //System.out.println("222: "+response.getStatus());
         return flag;
     }
 }

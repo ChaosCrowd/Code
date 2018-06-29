@@ -111,7 +111,7 @@ public class OrderController {
 
         //System.out.println("uuuuuuu :   *** "+token);
         boolean hasSend = handler.sendMessageToAllUsers(new TextMessage(temp4.toString()));
-        System.out.println(hasSend+ " message "+temp4.toString());
+        //.println(hasSend+ " message "+temp4.toString());
         return res.toString();
 
     }
@@ -137,7 +137,7 @@ public class OrderController {
         } else if (state.equals("refused")) {
             stateid = 5;
         }
-        System.out.println("sta : "+stateid);
+        //System.out.println("sta : "+stateid);
         List<Order> orderlist = orderService.getOrdersListByStatus(stateid);
         response.setStatus(200);
         res.put("msg", "OK");
@@ -156,9 +156,9 @@ public class OrderController {
 
             temp.put("orderID", id);
 
-            System.out.println("orderid: "+id);
-            System.out.println("goodlistsize: "+goodsidlist.size());
-            System.out.println("goodlistsize: "+cuntlist.size());
+            //System.out.println("orderid: "+id);
+            //System.out.println("goodlistsize: "+goodsidlist.size());
+            //System.out.println("goodlistsize: "+cuntlist.size());
             temp.put("orderState", state);
 
             temp.put("tableID", tableid);
