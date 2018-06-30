@@ -105,13 +105,5 @@ public class RegisterController {
         return JSON.toJSONString(new responseObj("OK", JSON.toJSONString(username)));
     }
 
-    @ResponseBody
-    @CrossOrigin
-    @RequestMapping(value = "signout")
-    public String signOut(HttpServletResponse response) {
-        response.setStatus(200);
-        // 覆盖cookies，注销登录
-        response.addCookie(new Cookie("token", null));
-        return JSON.toJSONString(new responseObj("OK", "logout succeed."));
-    }
+
 }

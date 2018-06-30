@@ -41,7 +41,7 @@ public class VerifyInterceptor extends HandlerInterceptorAdapter {
         response.addHeader("Access-Control-Allow-Headers", "Content-Type");*/
         response.addHeader("Access-Control-Max-Age", "360000");
         //response.setHeader("Access-Control-Allow-Headers", "If-Modified-Since");
-        response.setHeader("Access-Control-Allow-Origin", "http://139.199.71.21:8080");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
