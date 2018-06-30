@@ -31,8 +31,8 @@ public class MyHandler extends TextWebSocketHandler {
         if (username != null) {
             users.put(username, session);
             session.sendMessage(new TextMessage("成功建立socket连接"));
-            System.out.println(username);
-            System.out.println(session);
+            //System.out.println(username);
+            //System.out.println(session);
         }
     }
 
